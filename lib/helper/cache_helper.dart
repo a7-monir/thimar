@@ -4,7 +4,10 @@ class CacheHelper{
   static late SharedPreferences _preferences;
 
   static init() async{
-    _preferences =await SharedPreferences.getInstance();
+    _preferences = await SharedPreferences.getInstance();
+  }
+  static clear()async{
+    await _preferences.clear();
   }
 
   static setUserId(int id) async {
@@ -39,7 +42,7 @@ class CacheHelper{
   }
 
   static String getImage() {
-    return _preferences.getString("image") ?? "";
+    return _preferences.getString("image") ??'assets/images/user.png' ;
   }
   static setIsBan(int isBan) async {
     await _preferences.setInt("isBan", isBan);
@@ -76,12 +79,12 @@ class CacheHelper{
   static setUserType(String userType) async {
     await _preferences.setString("userType", userType);
   }
-  static setFCMToken(String token) async {
-    await _preferences.setString("fcm_token", token);
+  static setDeviceToken(String token) async {
+    await _preferences.setString("device_token", token);
   }
 
-  static String getFCMToken() {
-    return _preferences.getString("fcm_token") ?? "";
+  static String getDeviceToken() {
+    return _preferences.getString("device_token") ?? "";
   }
   static setUserToken(String token) async {
     await _preferences.setString("token", token);

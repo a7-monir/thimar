@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:thimar/constant/app_image.dart';
 import '../helper/app_theme.dart';
 
 class AppInfo extends StatelessWidget {
@@ -16,12 +17,12 @@ class AppInfo extends StatelessWidget {
       onPressed: ontap,
       child: Row(
         children: [
-          Image.asset('assets/icons/$icon',color: AppTheme.mainColor,),
+          AppImage('assets/icons/$icon',color: AppTheme.mainColor,),
           SizedBox(width: 9.w,),
           Text(title,
             style: TextStyle(color: AppTheme.mainColor,fontSize:13.sp,fontWeight: FontWeight.bold),),
           const Spacer(),
-          Image.asset('assets/icons/arrow.png'),
+          AppImage('assets/icons/arrow.png'),
         ],
       ),
     );

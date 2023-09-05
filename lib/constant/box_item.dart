@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:thimar/constant/app_image.dart';
 
 import '../helper/app_theme.dart';
 
@@ -15,16 +16,16 @@ class ItemBox extends StatelessWidget {
         Stack(
           alignment: Alignment.topLeft,
           children: [
-            Image.asset('assets/items/tomato.png'),
+            AppImage('assets/items/tomato.png'),
             Container(
               width: 54.w,
               height: 20.h,
               decoration: BoxDecoration(
                 color: AppTheme.mainColor
                 ,
-                borderRadius: const BorderRadius.only(
-                  topLeft: Radius.circular(12),
-                  bottomRight: Radius.circular(12),),
+                borderRadius:  BorderRadius.only(
+                  topLeft: Radius.circular(12.r),
+                  bottomRight: Radius.circular(12.r),),
               ),
               child: Text('45%-',
                 textAlign: TextAlign.center,
@@ -44,7 +45,7 @@ class ItemBox extends StatelessWidget {
         Text('السعر/1كجم',style: TextStyle(
 
             fontSize: 12.sp,
-            color:AppTheme.maingreycolor
+            color:AppTheme.mainGreyColor
         ),),
         Row(
           children: [
@@ -52,11 +53,11 @@ class ItemBox extends StatelessWidget {
               children: [
                 Text('45ر.س',
                   style: TextStyle(
-                    color: AppTheme.secondbtncolor,
+                    color: AppTheme.secondBtnColor,
                     fontSize:16.sp,
                     fontWeight: FontWeight.bold,
                   ),),
-                const SizedBox(width: 5,),
+                SizedBox(width: 5.w,),
                 Text('56ر.س',
                   style: TextStyle(
                     decoration: TextDecoration.lineThrough,
@@ -66,17 +67,17 @@ class ItemBox extends StatelessWidget {
                   ),),
               ],
             ),
-            const SizedBox(width: 25,),
+            SizedBox(width: 25.w,),
             SizedBox(
               height: 30.h,
               width: 30.w,
               child: FittedBox(
                 child: FloatingActionButton(
                     onPressed: (){},
-                    backgroundColor: AppTheme.secondbtncolor,
+                    backgroundColor: AppTheme.secondBtnColor,
 
                     shape: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10),
+                      borderRadius: BorderRadius.circular(10.r),
                       borderSide: BorderSide.none,),
                     elevation: 0.0,
                     child: const Icon(Icons.add,size: 35,)

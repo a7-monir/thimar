@@ -319,7 +319,8 @@ class ServerGate {
           response: err.response,
         );
       }
-    } else if (err.type == DioErrorType.receiveTimeout || err.type == DioErrorType.sendTimeout) {
+    } else if (err.type == DioErrorType.receiveTimeout ||
+        err.type == DioErrorType.sendTimeout) {
       return CustomResponse(
         success: false,
         statusCode: err.response?.statusCode ?? 500,

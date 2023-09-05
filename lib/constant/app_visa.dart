@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:thimar/constant/app_image.dart';
 
 class AppVisa extends StatelessWidget {
  final Color color;
@@ -17,7 +18,7 @@ class AppVisa extends StatelessWidget {
       height: height,
       decoration: BoxDecoration(
         color: color,
-        borderRadius: BorderRadius.circular(10),
+        borderRadius: BorderRadius.circular(10.r),
       ),
 
         child:Stack(
@@ -37,13 +38,13 @@ class AppVisa extends StatelessWidget {
                           color: Colors.white,
                         ),
                         child: Center(
-                          child: Image.asset('assets/icons/check.png',color: color,),
+                          child:AppImage('assets/icons/check.png',color: color,),
                         ),
                       ),
                       SizedBox(width: 5.w,),
-                      Image.asset('assets/icons/trash.png',color: Colors.white,),
+                      AppImage('assets/icons/trash.png',color: Colors.white,),
                       const Spacer(),
-                      Image.asset('assets/icons/$image',color: Colors.white,)
+                      AppImage('assets/icons/$image',color: Colors.white,),
                     ],
                   ),
                   const Spacer(),
@@ -78,7 +79,8 @@ class AppVisa extends StatelessWidget {
                 ],
               ),
             ),
-            Image.asset('assets/images/mask.png',),
+            AppImage('assets/images/mask.png',),
+
           ],
         ) ,
     );

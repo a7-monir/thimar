@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:thimar/constant/app_image.dart';
 
 import '../helper/app_theme.dart';
 
@@ -22,10 +23,11 @@ class AppQuestions extends StatelessWidget {
           height: 20.h,
           width: 20.w,
           decoration: BoxDecoration(
-            color: AppTheme.thirdcolor,
-            borderRadius: BorderRadius.circular(5),
+            color: AppTheme.thirdColor,
+            borderRadius: BorderRadius.circular(5.r),
           ),
-          child: Image.asset('assets/icons/arrow_down.png'),
+          child: AppImage('assets/icons/arrow_down.png'),
+
         ),
       ],
     );

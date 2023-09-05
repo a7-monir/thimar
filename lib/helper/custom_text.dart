@@ -2,6 +2,7 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'app_theme.dart';
 
@@ -20,8 +21,8 @@ class CustomTitle extends StatelessWidget {
       children: [
         Text(
           title,
-            style: const TextStyle(
-              fontSize: 14,
+            style: TextStyle(
+              fontSize: 17.sp,
               fontWeight: FontWeight.w900,
               color: Colors.black,
             ),
@@ -45,7 +46,8 @@ class CustomTitle extends StatelessWidget {
 }
 class CustomOnlyTitle extends StatelessWidget {
   final String title;
-  const CustomOnlyTitle({Key? key, required this.title}) : super(key: key);
+  final Color color;
+  const CustomOnlyTitle({Key? key, required this.title, required this.color}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -53,10 +55,10 @@ class CustomOnlyTitle extends StatelessWidget {
       padding: const EdgeInsetsDirectional.fromSTEB(15, 0, 15, 0),
       child: Text(
         title,
-        style: const TextStyle(
-          fontSize: 14,
+        style: TextStyle(
+          fontSize: 17.sp,
           fontWeight: FontWeight.w900,
-          color: Colors.black,
+          color: color,
         ),
       ),
     );
