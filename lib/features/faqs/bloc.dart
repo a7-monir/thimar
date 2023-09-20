@@ -1,31 +1,33 @@
 
 
 import 'package:bloc/bloc.dart';
-import '../../../../../helper/server_gate.dart';
+
+import '../../core/logic/helper_methods.dart';
+import '../../core/logic/server_gate.dart';
 part 'events.dart';
 part 'model.dart';
 part 'states.dart';
 
-class FaqsBloc extends Bloc<FaqsEvents,FaqsState>{
+class FaqsBloc extends Bloc<FaqsEvents,FaqsStates>{
 
-  FaqsBloc(this.serverGate):super(FaqsState()){
-    on<FaqsStartEvent>(getFags);
+  FaqsBloc(this.serverGate):super(FaqsStates()){
+    on<FaqsStartEvent>(getData);
   }
 
-  FaqsModel? model ;
+
   final ServerGate serverGate;
   
-  void getFags(FaqsStartEvent event, Emitter<FaqsState>emit) async {
+  void getData(FaqsStartEvent event, Emitter<FaqsStates>emit) async {
     
     emit(FaqsLoadingState());
     
     final response= await serverGate.getFromServer(url: 'faqs');
 
     if(response.success){
-      model= FaqsModel.fromJson(response.response!.data);
-      emit(FaqsSuccessState());
+     final FaqsModel= FaqsData.fromJson(response.response!.data);
+      emit(FaqsSuccessState(model:FaqsModel,));
     }else{
-      emit(FaqsFailedState(error: response.msg, errType: response.errType!));
+      emit(FaqsFailedState(msg: response.msg, statusCode: response.errType!));
     }
   }
 }

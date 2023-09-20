@@ -3,18 +3,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:kiwi/kiwi.dart';
-import 'package:thimar/constant/app_button.dart';
-import 'package:thimar/constant/app_logo.dart';
-import 'package:thimar/helper/app_theme.dart';
+import 'package:thimar/core/design/res/app_button.dart';
+import 'package:thimar/core/design/res/app_logo.dart';
+import 'package:thimar/core/logic/app_theme.dart';
 
 import 'package:thimar/screens/auth/login.dart';
 
-import '../../constant/app_image.dart';
-import '../../constant/app_input.dart';
+import '../../core/design/res/app_input.dart';
+import '../../core/logic/helper_methods.dart';
+import '../../core/logic/toast.dart';
 import '../../features/change_password/bloc.dart';
 import '../../generated/locale_keys.g.dart';
-import '../../helper/helper_methods.dart';
-import '../../helper/toast.dart';
 import '../main/view.dart';
 
 class ChangePasswordView extends StatefulWidget {
@@ -98,7 +97,7 @@ class _ChangePasswordViewState extends State<ChangePasswordView> {
                     if (state is ChangePasswordSuccessState) {
                       navigateTo(MainView());
                     } else if (state is ChangePasswordFailState) {
-                      Toast.show(state.error, context);
+                      Toast.show(state.msg, context);
                     }
                   },
                   builder: (context, state) {

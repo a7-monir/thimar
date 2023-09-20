@@ -3,20 +3,24 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:thimar/screens/auth/splash/view.dart';
+import 'package:thimar/core/logic/app_theme.dart';
+import 'package:thimar/screens/auth/splash.dart';
+import 'package:thimar/screens/home/view.dart';
 import 'core/design/res/colors.dart';
-import 'helper/cache_helper.dart';
-import 'helper/helper_methods.dart';
+
+import 'core/logic/cache_helper.dart';
+import 'core/logic/helper_methods.dart';
 import 'kiwi.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
+   await Firebase.initializeApp();
   initKiwi();
   CacheHelper.init();
   await ScreenUtil.ensureScreenSize();
   await EasyLocalization.ensureInitialized();
   await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
+  SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(statusBarColor: AppTheme.mainColor));
 
   runApp(
     EasyLocalization(

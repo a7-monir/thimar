@@ -1,13 +1,13 @@
 part of 'bloc.dart';
 
 
-class CategoryProductModel {
-  late List<Datum> list;
+class CategoryProductData {
+  late List<CategoryProductModel> list;
 
 
-   CategoryProductModel.fromJson(Map<String, dynamic> json)
+   CategoryProductData.fromJson(Map<String, dynamic> json)
    {
-     list= List<Datum>.from(json["data"].map((x) => Datum.fromJson(x)));
+     list= List<CategoryProductModel>.from(json["data"].map((x) => CategoryProductModel.fromJson(x)));
 
 
    }
@@ -15,7 +15,7 @@ class CategoryProductModel {
 
 }
 
-class Datum {
+class CategoryProductModel {
 
   late int categoryId, id,priceBeforeDiscount,amount;
   late String title, description,code,mainImage;
@@ -26,7 +26,7 @@ class Datum {
   late List<Image> images;
   late DateTime createdAt;
 
-  Datum.fromJson(Map<String, dynamic> json)
+  CategoryProductModel.fromJson(Map<String, dynamic> json)
 
   { categoryId= json["category_id"]??0;
     id= json["id"]??0;

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:thimar/constant/app_image.dart';
 
-import '../helper/app_theme.dart';
+import '../../logic/app_theme.dart';
+import 'app_image.dart';
 
 class ItemBox extends StatelessWidget {
   const ItemBox({super.key});
@@ -45,7 +45,7 @@ class ItemBox extends StatelessWidget {
         Text('السعر/1كجم',style: TextStyle(
 
             fontSize: 12.sp,
-            color:AppTheme.mainGreyColor
+            color:AppTheme.mainColorText
         ),),
         Row(
           children: [

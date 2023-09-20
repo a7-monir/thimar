@@ -3,10 +3,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:kiwi/kiwi.dart';
-import 'package:thimar/constant/app_failed.dart';
-import 'package:thimar/constant/app_loading.dart';
-import 'package:thimar/constant/appbar.dart';
+import 'package:thimar/core/design/res/app_loading.dart';
 
+import '../core/design/res/app_failed.dart';
+import '../core/design/res/appbar.dart';
 import '../features/policy/bloc.dart';
 
 
@@ -32,13 +32,14 @@ class _PolicyViewState extends State<PolicyView> {
           if(state is PolicyLoadingState){
             return AppLoading();
           }else if(state is PolicySuccessState){
+            final data =state.model.data;
             return Container(
               padding: EdgeInsetsDirectional.symmetric(horizontal: 16.w),
-              child: Html(data: bloc.model!.list.policy,
+              child: Html(data: data.policy,
               ),
             );
           }else if(state is PolicyFailedState){
-            return AppFailed(msg: state.error);
+            return AppFailed(msg: state.msg);
           }else{
             return AppLoading();
           }

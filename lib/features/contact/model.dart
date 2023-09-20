@@ -1,23 +1,23 @@
 part of 'bloc.dart';
 
-class ContactModel {
-  late final Data list;
+class ContactData {
+  late final ContactModel data;
 
 
-  ContactModel.fromJson(Map<String, dynamic> json){
-    list = Data.fromJson(json['data']??{});
+  ContactData.fromJson(Map<String, dynamic> json){
+    data = ContactModel.fromJson(json['data']??{});
   }
 
 }
 
-class Data {
+class ContactModel {
 
   late final String phone, email, whatsapp,location;
   late final Social social;
   late final double lat, lng;
 
 
-  Data.fromJson(Map<String, dynamic> json){
+  ContactModel.fromJson(Map<String, dynamic> json){
     phone = json['phone']??'';
     email = json['email']??'';
     whatsapp = json['whatsapp']??'';

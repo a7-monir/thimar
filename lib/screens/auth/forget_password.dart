@@ -3,18 +3,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:kiwi/kiwi.dart';
-import 'package:thimar/constant/app_button.dart';
+import 'package:thimar/core/design/res/app_button.dart';
 
-import 'package:thimar/constant/app_loading.dart';
-import 'package:thimar/constant/app_logo.dart';
+import 'package:thimar/core/design/res/app_loading.dart';
+import 'package:thimar/core/design/res/app_logo.dart';
 import 'package:thimar/generated/locale_keys.g.dart';
-import 'package:thimar/helper/helper_methods.dart';
 
 import 'package:thimar/screens/auth/login.dart';
-import '../../constant/app_input.dart';
+import '../../core/design/res/app_input.dart';
+import '../../core/logic/helper_methods.dart';
+import '../../core/logic/toast.dart';
 import '../../features/forget_password/bloc.dart';
-import '../../helper/app_theme.dart';
-import '../../helper/toast.dart';
+import '../../core/logic/app_theme.dart';
 import 'verification.dart';
 
 class ForgetPasswordView extends StatefulWidget {
@@ -50,7 +50,7 @@ class _ForgetPasswordViewState extends State<ForgetPasswordView> {
                   'أدخل رقم الجوال المرتبط بحسابك',
                   style: TextStyle(
                     fontSize: 16.sp,
-                    color: AppTheme.mainGreyColor,
+                    color: AppTheme.mainColorText,
                   ),
                 ),
                 SizedBox(
@@ -82,7 +82,7 @@ class _ForgetPasswordViewState extends State<ForgetPasswordView> {
                             ),
                           ));
                     } else if (state is ForgetPasswordFailState) {
-                      Toast.show(state.error, context);
+                      Toast.show(state.msg, context);
                     }
                   },
                   builder: (context, state) {

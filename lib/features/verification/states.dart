@@ -1,45 +1,52 @@
 part of 'bloc.dart';
-class VerificationState{}
+class VerificationStates{}
 
-class VerificationLoadingState extends VerificationState{
+class VerificationLoadingState extends VerificationStates{
 }
 
-class VerificationSuccessState extends VerificationState{}
+class VerificationSuccessState extends VerificationStates{
+  final VerificationData model;
+  final String msg;
+  VerificationSuccessState({
+    required this.model,
+    required this.msg
+  }){showMessage(msg);}
+}
 
-class VerificationFailedState extends VerificationState{
-  int type;
-  String error;
+class VerificationFailedState extends VerificationStates{
+  final int statusCode;
+  final String msg;
   VerificationFailedState({
-    required this.type,
-    required this.error,
+    required this.statusCode,
+    required this.msg,
   });
 }
 
-class CheckCodeLoadingState extends VerificationState {}
+class CheckCodeLoadingState extends VerificationStates {}
 
-class CheckCodeSuccessState extends VerificationState {}
+class CheckCodeSuccessState extends VerificationStates {}
 
-class CheckCodeFailedState extends VerificationState {
-  int type;
-  String error;
+class CheckCodeFailedState extends VerificationStates {
+ final int statusCode;
+ final String msg;
   CheckCodeFailedState({
-    required this.type,
-    required this.error,
+    required this.statusCode,
+    required this.msg,
   });
 }
 
 
 
-class ResendCodeLoadingState extends VerificationState {}
+class ResendCodeLoadingState extends VerificationStates {}
 
-class ResendCodeSuccessState extends VerificationState {}
+class ResendCodeSuccessState extends VerificationStates {}
 
-class ResendCodeFailedState extends VerificationState {
-  int errType;
-  String error;
+class ResendCodeFailedState extends VerificationStates {
+  int statusCode;
+  String msg;
   ResendCodeFailedState({
-    required this.errType,
-    required this.error,
+    required this.statusCode,
+    required this.msg,
   });
 }
 

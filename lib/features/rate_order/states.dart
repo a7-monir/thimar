@@ -6,14 +6,17 @@ class AddRateStates{}
 class AddRateLoadingState extends AddRateStates{}
 
 class AddRateSuccessState extends AddRateStates{
-
+  String msg;
+  AddRateSuccessState({
+    required this.msg,
+  }){showMessage(msg);}
 }
 
 class AddRateFailedState extends AddRateStates{
-  int type;
-  String error;
+  int statusCode ;
+  String msg;
   AddRateFailedState({
-    required this.type,
-    required this.error,
+    required this.msg,
+    required this.statusCode,
   });
 }

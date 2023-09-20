@@ -1,23 +1,24 @@
 part of 'bloc.dart';
-class ForgetPasswordState{}
+class ForgetPasswordStates{}
 
-class ForgetPasswordLoadingState extends ForgetPasswordState{}
+class ForgetPasswordLoadingState extends ForgetPasswordStates{}
 
-class ForgetPasswordSuccessState extends ForgetPasswordState{
-
+class ForgetPasswordSuccessState extends ForgetPasswordStates{
   var phone;
+  final String msg;
   ForgetPasswordSuccessState({
     required this.phone,
+    required this.msg
   });
 }
 
-class ForgetPasswordFailState extends ForgetPasswordState {
+class ForgetPasswordFailState extends ForgetPasswordStates {
 
-  int type;
-  String error;
+  int statusCode;
+  String msg;
   ForgetPasswordFailState({
-    required this.type,
-    required this.error,
+    required this.statusCode,
+    required this.msg,
   });
 
 }

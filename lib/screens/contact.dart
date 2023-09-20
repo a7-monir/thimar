@@ -4,13 +4,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:kiwi/kiwi.dart';
-import 'package:thimar/constant/app_button.dart';
-import 'package:thimar/constant/app_failed.dart';
-import 'package:thimar/constant/app_loading.dart';
-import 'package:thimar/constant/appbar.dart';
-import 'package:thimar/helper/app_theme.dart';
+import 'package:thimar/core/design/res/app_button.dart';
+import 'package:thimar/core/design/res/app_loading.dart';
+import 'package:thimar/core/logic/app_theme.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import '../constant/app_input.dart';
+import '../core/design/res/app_failed.dart';
+import '../core/design/res/app_input.dart';
+import '../core/design/res/appbar.dart';
 import '../features/contact/bloc.dart';
 
 class ContactUsView extends StatefulWidget {
@@ -44,6 +44,7 @@ class _ContactUsViewState extends State<ContactUsView> {
             return AppLoading();
           }
           else if (state is ContactSuccessState){
+            var data = state.model.data;
            return  SingleChildScrollView(
               child: Padding(
                 padding: EdgeInsets.all(16),
@@ -59,7 +60,7 @@ class _ContactUsViewState extends State<ContactUsView> {
                             child: GoogleMap(
                               mapType: MapType.normal,
                               initialCameraPosition: CameraPosition(
-                                target: LatLng(bloc.model!.list.lat,bloc.model!.list.lng),
+                                target: LatLng(data.lat,data.lng),
                                 zoom: 14.4746,
                               ),
                               onMapCreated: (GoogleMapController controller) {
@@ -92,7 +93,7 @@ class _ContactUsViewState extends State<ContactUsView> {
                                           width: 8.w,
                                         ),
                                         Text(
-                                          bloc.model!.list.location,
+                                          data.location,
                                           style: TextStyle(fontSize: 12.sp),
                                         ),
                                       ],
@@ -108,7 +109,7 @@ class _ContactUsViewState extends State<ContactUsView> {
                                           width: 8.w,
                                         ),
                                         Text(
-                                          bloc.model!.list.phone,
+                                          data.phone,
                                           style: TextStyle(fontSize: 14.sp),
                                         ),
                                       ],
@@ -124,7 +125,7 @@ class _ContactUsViewState extends State<ContactUsView> {
                                           width: 8.w,
                                         ),
                                         Text(
-                                          bloc.model!.list.email,
+                                          data.email,
                                           style: TextStyle(fontSize: 14.sp),
                                         ),
                                       ],
@@ -190,7 +191,7 @@ class _ContactUsViewState extends State<ContactUsView> {
             );
           }
           else if(state is ContactFailedState){
-           return  AppFailed(msg: state.error,);
+           return  AppFailed(msg: state.msg,);
           }
           else{ return AppLoading();}
 

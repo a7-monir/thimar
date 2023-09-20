@@ -1,6 +1,7 @@
 
 import 'package:bloc/bloc.dart';
-import '../../helper/server_gate.dart';
+
+import '../../core/logic/server_gate.dart';
 part 'events.dart';
 part 'model.dart';
 part 'states.dart';
@@ -9,17 +10,17 @@ part 'states.dart';
 class CategoriesBloc extends Bloc<CategoriesEvent, CategoriesState> {
   CategoriesBloc(this.serverGate) : super(CategoriesState()) {
 
-    on<CategoriesStartEvent>(Categories);
+    on<CategoriesStartEvent>(getData);
 
   }
 
   final ServerGate serverGate;
 
-  CategoriesModel? categoriesModel;
+  // CategoriesModel? categoriesModel;
 
 
 
-  void Categories(CategoriesStartEvent event, Emitter<CategoriesState> emit) async {
+  void getData(CategoriesStartEvent event, Emitter<CategoriesState> emit) async {
     emit(CategoriesLoadingState());
 
     final response = await serverGate.getFromServer(url: 'categories');
@@ -27,12 +28,12 @@ class CategoriesBloc extends Bloc<CategoriesEvent, CategoriesState> {
     //final model = CategoriesModel.fromJson(response.response!.data);
 
     if (response.success) {
-      categoriesModel = CategoriesModel.fromJson(response.response!.data);
+      final categoriesModel = CategoriesData.fromJson(response.response!.data);
 
-      emit(CategoriesSuccessState());
+      emit(CategoriesSuccessState(model: categoriesModel));
     } else {
       emit(CategoriesFailedState(
-          error: response.msg, errType: response.errType!));
+          msg: response.msg, statusCode: response.errType!));
     }
   }
 

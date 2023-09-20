@@ -1,16 +1,21 @@
 part of 'bloc.dart';
 
-class PolicyState{}
+class PolicyStates{}
 
-class PolicyLoadingState extends PolicyState {}
+class PolicyLoadingState extends PolicyStates {}
 
-class PolicySuccessState extends PolicyState {}
+class PolicySuccessState extends PolicyStates {
+  final PolicyData model;
+  PolicySuccessState({
+    required this.model,
+  });
+}
 
-class PolicyFailedState extends PolicyState {
-  String error;
-  int errType;
+class PolicyFailedState extends PolicyStates {
+  String msg;
+  int statusCode;
   PolicyFailedState({
-    required this.error,
-    required this.errType,
+    required this.msg,
+    required this.statusCode,
   });
 }

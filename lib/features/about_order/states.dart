@@ -2,18 +2,23 @@ part of 'bloc.dart';
 
 class AboutOrderState{}
 
-class AboutOrderLoadingState extends AboutOrderState {}
+class AboutOrderLoadingState extends AboutOrderState {
+
+}
 
 class AboutOrderSuccessState extends AboutOrderState {
+  final AboutOrderData model;
+  AboutOrderSuccessState({required this.model,}){
+   }
 
 }
 
 class AboutOrderFailedState extends AboutOrderState {
-  String error;
-  int errType;
+  String msg;
+  int statusCode;
   AboutOrderFailedState({
-    required this.errType,
-    required this.error,
+    required this.statusCode,
+    required this.msg,
   });
 
 
@@ -27,11 +32,11 @@ class CancelOrderSuccessState extends AboutOrderState {
 }
 
 class CancelOrderFailedState extends AboutOrderState {
-  String error;
-  int errType;
+  String msg;
+  int statusCode;
 
   CancelOrderFailedState({
-    required this.errType,
-    required this.error,
+    required this.msg,
+    required this.statusCode,
   });
 }

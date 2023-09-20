@@ -3,13 +3,18 @@ class ChangePasswordState{}
 
 class ChangePasswordLoadingState extends ChangePasswordState{}
 
-class ChangePasswordSuccessState extends ChangePasswordState{}
+class ChangePasswordSuccessState extends ChangePasswordState{
+  final String msg;
+  ChangePasswordSuccessState({required this.msg}){
+    showMessage(msg);
+  }
+}
 
 class ChangePasswordFailState extends ChangePasswordState{
-  int type;
-  String error;
+  int statusCode;
+  String msg;
   ChangePasswordFailState({
-    required this.type,
-    required this.error,
+    required this.statusCode,
+    required this.msg,
   });
 }

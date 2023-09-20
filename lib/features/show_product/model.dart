@@ -1,16 +1,16 @@
 part of 'bloc.dart';
- class ShowProductModel {
+ class ShowProductData {
 
 
   late final String message;
-   late Data data;
+   late ShowProductModel data;
 
-   ShowProductModel.fromJson(Map<String, dynamic> json){
+   ShowProductData.fromJson(Map<String, dynamic> json){
      message= json["message"]??'';
-     data= Data.fromJson(json["data"]);
+     data= ShowProductModel.fromJson(json["data"]);
    }
  }
- class Data {
+ class ShowProductModel {
    late int categoryId, id,priceBeforeDiscount,amount;
    late String title, description, code,mainImage;
    late dynamic price;
@@ -20,7 +20,7 @@ part of 'bloc.dart';
    late List<Image> images;
    late DateTime createdAt;
 
-   Data.fromJson(Map<String, dynamic> json)
+   ShowProductModel.fromJson(Map<String, dynamic> json)
    {
      categoryId= json["category_id"]??0;
      id= json["id"]??0;

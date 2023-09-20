@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:thimar/constant/app_image.dart';
-
-import '../helper/app_theme.dart';
+import '../../logic/app_theme.dart';
+import 'app_image.dart';
 
 
 enum InputType {phone,password,email,normal}
@@ -114,7 +113,7 @@ class _AppInputState extends State<AppInput> {
         ),
             suffixIcon:widget.inputType==InputType.password?
             GestureDetector(
-              child:Icon(isPasswordShown?Icons.visibility_off:Icons.visibility),
+              child:Icon(isPasswordShown?Icons.visibility:Icons.visibility_off),
               onTap: (){
                 isPasswordShown=!isPasswordShown;
                 setState(() {

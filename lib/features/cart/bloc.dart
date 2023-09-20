@@ -1,31 +1,35 @@
 
 import 'package:bloc/bloc.dart';
+import 'package:thimar/core/logic/helper_methods.dart';
 
-import '../../../../helper/server_gate.dart';
+import '../../core/logic/server_gate.dart';
+
 part 'events.dart';
 part 'model.dart';
 part 'states.dart';
 
 class ShowCartBloc extends Bloc<CartEvents,CartStates>{
   ShowCartBloc(this.serverGate):super(CartStates()){
-    on<ShowCartStartEvent>(showCart);
+    on<ShowCartStartEvent>(getData);
     on<DeleteStartEvens>(deleteFromCart);
     on<AddCouponStartEvent>(addCoupon);
-  }
-  CartModel? model;
-  final ServerGate serverGate;
 
-  void showCart(ShowCartStartEvent event, Emitter<CartStates>emit)async{
+  }
+
+  final ServerGate serverGate;
+  CartModel? model;
+
+  void getData(ShowCartStartEvent event, Emitter<CartStates>emit)async{
     emit(ShowCartLoadingState());
     final response = await serverGate.getFromServer(url: 'client/cart');
     if(response.success){
-      model= CartModel.fromJson(response.response!.data);
-      emit(ShowCartSuccessState());
+     final  cartModel= CartModel.fromJson(response.response!.data);
+      emit(ShowCartSuccessState(model:cartModel));
     }
     else{
       emit(ShowCartFailedState(
-          error: response.msg,
-          errType: response.errType!));
+          msg: response.msg,
+          statusCode: response.errType!));
     }
 
   }
@@ -36,12 +40,12 @@ class ShowCartBloc extends Bloc<CartEvents,CartStates>{
     final response = await serverGate.deleteFromServer(url: 'client/cart/delete_item/${event.id}');
     if (response.success){
       model!.list.removeAt(event.index);
-      emit(DeleteFromCartSuccessState());
+      emit(DeleteFromCartSuccessState(msg: response.msg));
 
     }else{
       emit(DeleteFromCartFailedState(
-          error: response.msg,
-          errType: response.errType!));
+          msg: response.msg,
+          statusCode: response.errType!));
     }
     
   }

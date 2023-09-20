@@ -5,16 +5,17 @@ class CartStates {}
 class ShowCartLoadingState extends CartStates {}
 
 class ShowCartSuccessState extends CartStates {
-
+  final CartModel model;
+  ShowCartSuccessState({required this.model});
   //late final List<CartModel> list;
 }
 
 class ShowCartFailedState extends CartStates {
-  String error;
-  int errType;
+  String msg;
+  int statusCode;
   ShowCartFailedState({
-    required this.error,
-    required this.errType,
+    required this.msg,
+    required this.statusCode,
   });
 }
 
@@ -22,16 +23,17 @@ class ShowCartFailedState extends CartStates {
 class DeleteFromCartLoadingState extends CartStates {}
 
 class DeleteFromCartSuccessState extends CartStates {
-
+  final String msg;
+  DeleteFromCartSuccessState({required this.msg}){showMessage(msg);}
   //late final List<CartModel> list;
 }
 
 class DeleteFromCartFailedState extends CartStates {
-  String error;
-  int errType;
+  String msg;
+  int statusCode;
   DeleteFromCartFailedState({
-    required this.error,
-    required this.errType,
+    required this.msg,
+    required this.statusCode,
   });
 }
 

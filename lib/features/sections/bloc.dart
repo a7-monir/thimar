@@ -1,5 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../../../helper/server_gate.dart';
+
+import '../../core/logic/server_gate.dart';
 part 'events.dart';
 part 'model.dart';
 part 'states.dart';
@@ -7,17 +8,15 @@ part 'states.dart';
 class CategoriesProductBloc
     extends Bloc<CategoriesProductEvents, CategoriesProductStates> {
   CategoriesProductBloc(this.serverGate) : super(CategoriesProductStates()) {
-    on<CategoriesProductStartEvent>(GetCategoriesProduct);
+    on<CategoriesProductStartEvent>(getData);
 
     //on<CategoriesProductStartEvent>(GetProducts);
   }
 
   final ServerGate serverGate;
 
-  CategoryProductModel? model;
 
-  void GetCategoriesProduct(CategoriesProductStartEvent event,
-      Emitter<CategoriesProductStates> emit) async {
+  void getData(CategoriesProductStartEvent event, Emitter<CategoriesProductStates> emit) async {
     emit(CategoriesProductLoadingState());
 
     final response = await serverGate.getFromServer(url: 'products',
@@ -28,9 +27,9 @@ class CategoriesProductBloc
     });
 
     if (response.success) {
-      model = CategoryProductModel.fromJson(response.response!.data);
+      final categoryProductModel = CategoryProductData.fromJson(response.response!.data);
 
-      emit(CategoriesProductSuccessState());
+      emit(CategoriesProductSuccessState(model:categoryProductModel ));
     } else {
       emit(CategoriesProductFailedState(
           error: response.msg, errType: response.errType!));

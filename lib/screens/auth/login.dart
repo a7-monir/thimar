@@ -3,19 +3,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:kiwi/kiwi.dart';
-import 'package:thimar/constant/app_button.dart';
-import 'package:thimar/constant/app_loading.dart';
-import 'package:thimar/constant/app_logo.dart';
+import 'package:thimar/core/design/res/app_button.dart';
+import 'package:thimar/core/design/res/app_loading.dart';
+import 'package:thimar/core/design/res/app_logo.dart';
 import 'package:thimar/generated/locale_keys.g.dart';
-import 'package:thimar/helper/helper_methods.dart';
 import 'package:thimar/screens/auth/forget_password.dart';
 import 'package:thimar/screens/auth/register.dart';
 import 'package:thimar/screens/auth/verification.dart';
 
-import '../../constant/app_input.dart';
+import '../../core/design/res/app_input.dart';
+import '../../core/logic/helper_methods.dart';
+import '../../core/logic/toast.dart';
 import '../../features/login/bloc.dart';
-import '../../helper/app_theme.dart';
-import '../../helper/toast.dart';
+import '../../core/logic/app_theme.dart';
 import '../main/view.dart';
 
 
@@ -129,16 +129,15 @@ class _LoginViewState extends State<LoginView> {
 
                         listener: (context, state) {
                           if(state is LoginSuccessState){
-                            Toast.show(bloc.model!.message, context);
                             navigateTo(MainView());
 
 
                           }else if (state is LoginFailState) {
-                            if(state.type==403){
+                            if(state.statusCode==403){
                               Navigator.push(context, MaterialPageRoute(builder: (context) => VerificationView(
                                   phone: bloc.phoneController.text,
                                   fromForget:false),));
-                            } else{ Toast.show(state.error, context);}
+                            } else{ Toast.show(state.msg, context);}
 
                           }
                         },

@@ -2,8 +2,11 @@
 
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
-import 'package:thimar/helper/toast.dart';
-import '../../../../helper/server_gate.dart';
+
+import '../../core/logic/helper_methods.dart';
+import '../../core/logic/server_gate.dart';
+import '../../core/logic/toast.dart';
+
 part 'events.dart';
 part 'states.dart';
 
@@ -30,15 +33,16 @@ class ChangePasswordBloc extends Bloc<ChangePasswordEvents,ChangePasswordState>{
             confirmPasswordController.text.trim()){
           return true;
         }else {
-          Toast.show("passwordsNotMatched", context);
+          showMessage("passwordsNotMatched");
+
           return false;
         }
       }else {
-        Toast.show("PleaseWriteYourConfirmPassword", context);
+        showMessage("PleaseWriteYourConfirmPassword");
         return false;
       }
     }else {
-      Toast.show("PleaseWriteYourPassword", context);
+      showMessage('PleaseWriteYourPassword');
       return false;
     }
   }
@@ -56,11 +60,11 @@ class ChangePasswordBloc extends Bloc<ChangePasswordEvents,ChangePasswordState>{
       'password':passwordController.text,
     });
     if(response.success){
-      emit(ChangePasswordSuccessState());
+      emit(ChangePasswordSuccessState(msg: response.msg));
     }
     else{
       emit(ChangePasswordFailState(
-          type: response.errType!, error: response.msg
+          statusCode: response.errType!, msg: response.msg
       ));
     }
   }

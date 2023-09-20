@@ -5,16 +5,16 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:kiwi/kiwi.dart';
-import 'package:thimar/constant/app_image.dart';
-import 'package:thimar/constant/app_input.dart';
-import 'package:thimar/constant/app_loading.dart';
-import 'package:thimar/constant/appbar.dart';
-import 'package:thimar/helper/helper_methods.dart';
+import 'package:thimar/core/design/res/app_input.dart';
+import 'package:thimar/core/design/res/app_loading.dart';
 import 'package:thimar/screens/edit_password.dart';
-import '../constant/app_button.dart';
-import '../features/city/view.dart';
+import '../core/design/res/app_button.dart';
+import '../core/design/res/app_image.dart';
+import '../core/design/res/appbar.dart';
+import '../core/logic/cache_helper.dart';
+import '../core/logic/helper_methods.dart';
 import '../features/profile/bloc.dart';
-import '../helper/cache_helper.dart';
+import 'city/view.dart';
 
 
 
@@ -73,14 +73,17 @@ class _PersonalInfoViewState extends State<PersonalInfoView> {
                             onTap: () async {
                               final image = await ImagePicker.platform
                                   .getImageFromSource(
-                                      source: ImageSource.camera);
+                                      source: ImageSource.gallery);
                               if (image != null) {
                                 print(image.path);
                                 selectedImage = File(image.path);
                                 setState(() {});
                               }
                             },
-                            child: AppImage('assets/icons/camera.png'))),
+                            child:
+                            AppImage('assets/icons/Camera.png',)
+                        )
+                    ),
                   ],
                 ),
               ),
@@ -111,7 +114,7 @@ class _PersonalInfoViewState extends State<PersonalInfoView> {
               ),
               AppInput(
                 label: 'رقم الجوال',
-                prefix: 'assets/icons/phoneIcon.png',
+                prefix: 'assets/icons/phoneicon.png',
                 inputType: InputType.phone,
                 color: Color(0xFFFAFFF5),
                 controller: bloc.phoneController,

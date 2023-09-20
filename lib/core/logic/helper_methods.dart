@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:thimar/core/logic/app_theme.dart';
+
+import 'toast.dart';
 
 final navigatorKey = GlobalKey<NavigatorState>();
 
@@ -24,4 +27,19 @@ final navigatorKey = GlobalKey<NavigatorState>();
         ),
         (route) => removeHistory);
   }
+}
+
+enum MessageType {success,failed,warning}
+
+void showMessage(String msg,{MessageType messageType = MessageType.failed}){
+   if(msg.isNotEmpty)
+     {
+       Toast.show(msg, navigatorKey.currentContext!,
+       //     backgroundColor:
+       //     messageType==MessageType.warning?Colors.amber
+       // :messageType==MessageType.success?AppTheme.mainColor
+       // :AppTheme.mainRedColor
+       );
+     }
+
 }

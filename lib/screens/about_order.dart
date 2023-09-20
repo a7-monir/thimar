@@ -2,15 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:kiwi/kiwi.dart';
-import 'package:thimar/constant/app_button.dart';
-import 'package:thimar/helper/helper_methods.dart';
-
-import '../constant/app_failed.dart';
-import '../constant/app_image.dart';
-import '../constant/app_loading.dart';
-import '../constant/appbar.dart';
+import 'package:thimar/core/design/res/app_button.dart';
+import '../core/design/res/app_failed.dart';
+import '../core/design/res/app_image.dart';
+import '../core/design/res/app_loading.dart';
+import '../core/design/res/appbar.dart';
+import '../core/logic/helper_methods.dart';
 import '../features/about_order/bloc.dart';
-import '../helper/app_theme.dart';
+import '../core/logic/app_theme.dart';
 import 'rate_order.dart';
 
 
@@ -50,10 +49,11 @@ class _AboutOrderViewState extends State<AboutOrderView> {
           current is AboutOrderFailedState,
         builder: (context, state) {
           if (state is AboutOrderLoadingState) {
+
             return AppLoading();
           }
-          else if (state is AboutOrderSuccessState)
-          {
+          else if (state is AboutOrderSuccessState) {
+            final data =state.model.data;
             return  Padding(
                 padding: EdgeInsets.only(left: 16.w, right: 16.w),
                 child: Column(
@@ -68,23 +68,23 @@ class _AboutOrderViewState extends State<AboutOrderView> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              'طلب ${bloc.model!.data.id}',
+                              'طلب ${state.model.data.id}',
                               style: TextStyle(
                                   color: AppTheme.mainColor,
                                   fontSize: 17.sp,
                                   fontWeight: FontWeight.bold),
                             ),
                             Text(
-                              bloc.model!.data.date,
+                              state.model.data.date,
                               style: TextStyle(
                                   fontSize: 14.sp,
-                                  color: AppTheme.mainGreyColor),
+                                  color: AppTheme.mainColorText),
                             ),
                             Row(
                               children: [
                                 ...List.generate(
-                                  bloc.model!.data.products.length < 3 ?
-                                  bloc.model!.data.products.length:3, (i) =>
+                                  state.model.data.products.length < 3 ?
+                                  state.model.data.products.length:3, (i) =>
                                     Container(
                                       height: 25.h,
                                       width: 25.w,
@@ -95,7 +95,7 @@ class _AboutOrderViewState extends State<AboutOrderView> {
                                       child: Center(
                                           child:ClipRRect(
                                               borderRadius: BorderRadius.circular(10.r) ,
-                                              child: AppImage(bloc.model!.data.products[i].url,
+                                              child: AppImage(state.model.data.products[i].url,
                                               w: 25.w,
                                               h: 25.h,))
                                       ),
@@ -103,7 +103,7 @@ class _AboutOrderViewState extends State<AboutOrderView> {
                                 SizedBox(
                                   width: 5.w,
                                 ),
-                                bloc.model!.data.products.length <= 3
+                                state.model.data.products.length <= 3
                                     ?SizedBox():
                                 Container(
                                   height: 25.h,
@@ -115,7 +115,7 @@ class _AboutOrderViewState extends State<AboutOrderView> {
                                   ),
                                   child: Center(
                                     child: Text(
-                                      '+${bloc.model!.data.products.length-3}',
+                                      '+${state.model.data.products.length-3}',
                                       style: TextStyle(
                                           color: AppTheme.mainColor,
                                           fontSize: 11.sp,
@@ -135,24 +135,24 @@ class _AboutOrderViewState extends State<AboutOrderView> {
                               width: 70.w,
                               height: 23.h,
                               decoration: BoxDecoration(
-                                  color: bloc.model!.data.status == "in_way"
+                                  color: state.model.data.status == "in_way"
                                       ? Color(0xFFE6F5F0)
-                                      : bloc.model!.data.status == "pending"
+                                      :state.model.data.status == "pending"
                                       ? AppTheme.thirdColor
-                                      : bloc.model!.data.status == "canceled"
+                                      : state.model.data.status == "canceled"
                                       ? AppTheme.mainRedColor
                                       : Colors.black,
                                   borderRadius:
                                   BorderRadius.circular(5.r)),
                               child: Center(
                                 child: Text(
-                                  bloc.model!.data.status,
+                                  state.model.data.status,
                                   style: TextStyle(
-                                      color: bloc.model!.data.status == "in_way"
+                                      color: state.model.data.status == "in_way"
                                           ? Color(0xFF2D9E78)
-                                          : bloc.model!.data.status == "pending"
+                                          : state.model.data.status == "pending"
                                           ? AppTheme.mainColor
-                                          : bloc.model!.data.status == "canceled"
+                                          :state.model.data.status == "canceled"
                                           ? Colors.red
                                           : Colors.white,
                                       fontSize: 11.sp),
@@ -160,7 +160,7 @@ class _AboutOrderViewState extends State<AboutOrderView> {
                               ),
                             ),
                             Text(
-                              '${ bloc.model!.data.orderPrice} ر.س',
+                              '${ state.model.data.orderPrice} ر.س',
                               style: TextStyle(
                                   fontSize: 13.sp,
                                   color: AppTheme.mainColor),
@@ -251,7 +251,7 @@ class _AboutOrderViewState extends State<AboutOrderView> {
                                       fontSize: 15.sp),
                                 ),
                                 Text(
-                                  '${ bloc.model!.data.orderPrice}ر.س',
+                                  '${ state.model.data.orderPrice}ر.س',
                                   style: TextStyle(
                                       color: AppTheme.mainColor,
                                       fontSize: 15.sp),
@@ -272,7 +272,7 @@ class _AboutOrderViewState extends State<AboutOrderView> {
                                       fontSize: 15.sp),
                                 ),
                                 Text(
-                                  '${ bloc.model!.data.deliveryPrice}ر.س',
+                                  '${ state.model.data.deliveryPrice}ر.س',
                                   style: TextStyle(
                                       color: AppTheme.mainColor,
                                       fontSize: 15.sp),
@@ -293,7 +293,7 @@ class _AboutOrderViewState extends State<AboutOrderView> {
                                       fontSize: 15.sp),
                                 ),
                                 Text(
-                                  '${ bloc.model!.data.totalPrice.toInt()}ر.س',
+                                  '${ state.model.data.totalPrice.toInt()}ر.س',
                                   style: TextStyle(
                                       color: AppTheme.mainColor,
                                       fontSize: 15.sp),
@@ -304,7 +304,7 @@ class _AboutOrderViewState extends State<AboutOrderView> {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Text(
-                                  'تم الدفع بواسطة ${ bloc.model!.data.payType}',
+                                  'تم الدفع بواسطة ${ state.model.data.payType}',
                                   style: TextStyle(
                                       color: AppTheme.mainColor,
                                       fontSize: 17.sp),
@@ -323,7 +323,10 @@ class _AboutOrderViewState extends State<AboutOrderView> {
                         BlocBuilder(
                           bloc: bloc,
                           builder: (context, state) {
-                            if (bloc.model!.data.status == 'pending') {
+                            if (state is AboutOrderLoadingState){
+                              return AppLoading();
+                            }else{
+                              if (data.status == 'pending') {
                               return AppButton(
                                 text: 'إلغاء الطلب',
                                 onTap: () {
@@ -341,13 +344,14 @@ class _AboutOrderViewState extends State<AboutOrderView> {
                                 onTap: () {
                                   navigateTo(
                                       RateOrderView(
-                                    products: bloc.model!.data,
-                                  ));
+                                        products:data,
+                                      ));
                                 },
                                 height: 60.h,
                                 width: 343.w,
                                 fontSize: 17.sp,);
-                            }
+                            }}
+
                           },
                         )
                     ),
@@ -355,7 +359,7 @@ class _AboutOrderViewState extends State<AboutOrderView> {
                 )
             );
           } else if (state is AboutOrderFailedState) {
-            return AppFailed(msg: state.error);
+            return AppFailed(msg: state.msg);
           } else {
             return AppLoading();
           }

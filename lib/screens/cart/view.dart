@@ -2,16 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:kiwi/kiwi.dart';
-import 'package:thimar/constant/app_button.dart';
-import 'package:thimar/constant/app_failed.dart';
-
-import 'package:thimar/constant/app_input.dart';
-import 'package:thimar/constant/app_loading.dart';
-import 'package:thimar/constant/appbar.dart';
-import 'package:thimar/helper/app_theme.dart';
-import 'package:thimar/helper/helper_methods.dart';
-
-import '../../../features/get_cart/bloc.dart';
+import 'package:thimar/core/design/res/app_button.dart';
+import 'package:thimar/core/design/res/app_input.dart';
+import 'package:thimar/core/design/res/app_loading.dart';
+import 'package:thimar/core/logic/app_theme.dart';
+import '../../core/design/res/app_failed.dart';
+import '../../core/design/res/appbar.dart';
+import '../../core/logic/helper_methods.dart';
+import '../../features/cart/bloc.dart';
 import '../confirm_order/view.dart';
 
 class CartView extends StatefulWidget {
@@ -49,6 +47,7 @@ class _CartViewState extends State<CartView> {
           if (state is ShowCartLoadingState) {
             return AppLoading();
           } else if (state is ShowCartSuccessState) {
+            var list = state.model.list;
             return SafeArea(
                 child: SingleChildScrollView(
               child: Column(
@@ -57,7 +56,7 @@ class _CartViewState extends State<CartView> {
                   ListView.builder(
                     physics: const NeverScrollableScrollPhysics(),
                     shrinkWrap: true,
-                    itemCount: bloc.model!.list.length,
+                    itemCount: list.length,
                     scrollDirection: Axis.vertical,
                     itemBuilder: (context, index) {
                       return Padding(
@@ -91,7 +90,7 @@ class _CartViewState extends State<CartView> {
                                   borderRadius: BorderRadius.circular(15),
                                 ),
                                 child: Image.network(
-                                  bloc.model!.list[index].image,
+                                  list[index].image,
                                   width: 80,
                                 ),
                               ),
@@ -104,7 +103,7 @@ class _CartViewState extends State<CartView> {
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
                                     Text(
-                                      bloc.model!.list[index].title,
+                                      list[index].title,
                                       style: TextStyle(
                                           fontSize: 14.sp,
                                           fontWeight: FontWeight.w900,
@@ -114,7 +113,7 @@ class _CartViewState extends State<CartView> {
                                       height: 3.h,
                                     ),
                                     Text(
-                                      "${bloc.model!.list[index].price} ر٫س",
+                                      "${list[index].price} ر٫س",
                                       style: TextStyle(
                                           fontSize: 12.sp,
                                           fontWeight: FontWeight.w900,
@@ -202,7 +201,7 @@ class _CartViewState extends State<CartView> {
                                 onTap: () {
                                   // data[index].remove(data[index]);
                                   deleteBloc.add(DeleteStartEvens(
-                                    id: bloc.model!.list[index].id,
+                                    id: list[index].id,
                                     index: index,
                                   ));
                                   bloc.add(ShowCartStartEvent());
@@ -319,7 +318,7 @@ class _CartViewState extends State<CartView> {
                                   ),
                                   Spacer(),
                                   Text(
-                                    bloc.model!.totalPriceBeforeDiscount.toString(),
+                                    state.model.totalPriceBeforeDiscount.toString(),
                                     style: TextStyle(
                                         color: AppTheme.mainColor,
                                         fontSize: 15.sp),
@@ -340,7 +339,7 @@ class _CartViewState extends State<CartView> {
                                   ),
                                   Spacer(),
                                   Text(
-                                    bloc.model!.totalDiscount.toString(),
+                                    state.model.totalDiscount.toString(),
                                     style: TextStyle(
                                         color: AppTheme.mainColor,
                                         fontSize: 15.sp),
@@ -369,7 +368,7 @@ class _CartViewState extends State<CartView> {
                                   ),
                                   Spacer(),
                                   Text(
-                                    bloc.model!.totalPriceWithVat.toString(),
+                                    state.model.totalPriceWithVat.toString(),
                                     style: TextStyle(
                                         color: AppTheme.mainColor,
                                         fontSize: 15.sp),
@@ -391,7 +390,7 @@ class _CartViewState extends State<CartView> {
                         text: 'الانتقال لإتمام الطلب',
                         onTap: () {
                           navigateTo(
-                              ConfirmOrderView(model:bloc.model));
+                              ConfirmOrderView(model:state.model));
                         },
                         height: 60.h,
                         width: 343.w,
@@ -401,7 +400,7 @@ class _CartViewState extends State<CartView> {
               ),
             ));
           } else if (state is ShowCartFailedState) {
-            return AppFailed(msg: state.error);
+            return AppFailed(msg: state.msg);
           } else {
             return AppLoading();
           }

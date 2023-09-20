@@ -1,11 +1,12 @@
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:thimar/constant/app_visa.dart';
-import 'package:thimar/constant/appbar.dart';
-import 'package:thimar/helper/app_theme.dart';
 
-import '../constant/app_button.dart';
+import 'package:thimar/core/logic/app_theme.dart';
+
+import '../core/design/res/app_button.dart';
+import '../core/design/res/app_visa.dart';
+import '../core/design/res/appbar.dart';
 
 class PayView extends StatelessWidget {
   const PayView({Key? key}) : super(key: key);

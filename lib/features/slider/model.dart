@@ -1,20 +1,20 @@
 part of 'bloc.dart';
-class SliderModel {
+class SliderData {
 
-  late List<Datum> list;
+  late List<SliderModel> list;
 
-  SliderModel.fromJson(Map<String, dynamic> json) {
-    list=List<Datum>.from(json["data"].map((x) => Datum.fromJson(x)));
+  SliderData.fromJson(Map<String, dynamic> json) {
+    list=List<SliderModel>.from(json["data"].map((x) => SliderModel.fromJson(x)));
   }
 
 }
 
-class Datum {
+class SliderModel {
 
   late int id;
   late String media;
 
-  Datum.fromJson(Map<String, dynamic> json)
+  SliderModel.fromJson(Map<String, dynamic> json)
   {
     id= json["id"];
     media= json["media"];

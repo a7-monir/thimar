@@ -3,24 +3,26 @@
 
 
 import 'package:bloc/bloc.dart';
-import '../../../../helper/server_gate.dart';
+import 'package:thimar/core/logic/helper_methods.dart';
+
+import '../../core/logic/server_gate.dart';
 part 'events.dart';
 part 'model.dart';
 part 'states.dart';
 
-class FavoritesBloc extends Bloc<FavoritesEvents,FavoritesState>{
+class FavoritesBloc extends Bloc<FavoritesEvents,FavoritesStates>{
 
-  FavoritesBloc(this.serverGate):super (FavoritesState()){
+  FavoritesBloc(this.serverGate):super (FavoritesStates()){
 
-    on<FavoritesStartEvent>(getFavorites);
+    on<FavoritesStartEvent>(getData);
   }
 
   final ServerGate serverGate;
 
   // int? categoriesProductId;
-  FavoritesModel? model;
 
-  void getFavorites (FavoritesStartEvent event , Emitter<FavoritesState> emit ) async{
+
+  void getData (FavoritesStartEvent event , Emitter<FavoritesStates> emit ) async{
 
     emit(FavoritesLoadingState());
 
@@ -28,14 +30,14 @@ class FavoritesBloc extends Bloc<FavoritesEvents,FavoritesState>{
 
     if(response.success){
 
-      model =FavoritesModel.fromJson(response.response!.data);
+     final favoritesModel =FavoritesData.fromJson(response.response!.data);
 
 
-      emit(FavoritesSuccessState());
+      emit(FavoritesSuccessState(model: favoritesModel,));
 
 
     }else{ emit(FavoritesFailedState(
-        error: response.msg,
-        errType: response.errType!));}
+        msg: response.msg,
+        statusCode: response.errType!));}
   }
 }

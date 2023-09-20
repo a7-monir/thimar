@@ -1,66 +1,40 @@
 part of 'bloc.dart';
 
 
-class OrderState{}
+class OrderStates{}
 
 
-class ClientOrderLoadingState extends OrderState {}
+class ClientOrderLoadingState extends OrderStates {}
 
-class ClientOrderSuccessState extends OrderState {
+class ClientOrderSuccessState extends OrderStates {
 
-  ClientOrderSuccessState();
-}
+  final OrderData model;
+  ClientOrderSuccessState({
+    required this.model,
 
-class ClientOrderFailedState extends OrderState {
-  String error;
-  int errType;
-  ClientOrderFailedState({
-    required this.errType,
-    required this.error,
   });
 }
 
-// class CurrentOrderLoadingState extends OrderState {}
-//
-// class CurrentOrderSuccessState extends OrderState {
-//
-// }
-//
-// class CurrentOrderFailedState extends OrderState {
-//   String error;
-//   int errType;
-//   CurrentOrderFailedState({
-//     required this.errType,
-//     required this.error,
-//   });
-// }
-
-
-
-// class FinishedOrderLoadingState extends OrderState {}
-//
-// class FinishedOrderSuccessState extends OrderState {
-//
-// }
-//
-// class FinishedOrderFailedState extends OrderState {
-//   String error;
-//   int errType;
-//   FinishedOrderFailedState({
-//     required this.errType,
-//     required this.error,
-//   });
-// }
-
-
-
-class CancelOrderLoadingState extends OrderState {}
-
-class CancelOrderSuccessState extends OrderState {
-
+class ClientOrderFailedState extends OrderStates {
+  String msg;
+  int statusCode;
+  ClientOrderFailedState({
+    required this.statusCode,
+    required this.msg,
+  });
 }
 
-class CancelOrderFailedState extends OrderState {
+class CancelOrderLoadingState extends OrderStates {}
+
+class CancelOrderSuccessState extends OrderStates {
+  String msg;
+
+  CancelOrderSuccessState({
+    required this.msg,
+  }){showMessage(msg);}
+}
+
+class CancelOrderFailedState extends OrderStates {
   String error;
   int errType;
   CancelOrderFailedState({

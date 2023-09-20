@@ -2,13 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:kiwi/kiwi.dart';
-import 'package:thimar/constant/app_failed.dart';
-import 'package:thimar/constant/app_image.dart';
-import 'package:thimar/constant/app_loading.dart';
-import '../constant/appbar.dart';
+
+import '../core/design/res/app_failed.dart';
+import '../core/design/res/app_image.dart';
+import '../core/design/res/app_loading.dart';
+import '../core/design/res/appbar.dart';
+import '../core/logic/helper_methods.dart';
 import '../features/my_order/bloc.dart';
-import '../helper/app_theme.dart';
-import '../helper/helper_methods.dart';
+import '../core/logic/app_theme.dart';
 import 'about_order.dart';
 
 
@@ -30,11 +31,11 @@ class _MyOrderViewState extends State<MyOrderView> {
     // final TabController controller = TabController(length: 2);
     return Scaffold(
         appBar: PreferredSize(
-          preferredSize: Size.fromHeight(70.h),
+          preferredSize: Size.fromHeight(60.h),
           child: CustomAppBar(title: 'طلباتي'),
         ),
         body: Padding(
-            padding: const EdgeInsets.all(20.0),
+            padding: EdgeInsets.only(left: 20.w,right: 20.w,),
             child: DefaultTabController(
                 length: 2,
                 child: Column(
@@ -76,6 +77,7 @@ class _MyOrderViewState extends State<MyOrderView> {
                           return AppLoading();
                         }
                         else if (state is ClientOrderSuccessState) {
+                          final list =state.model.list;
                           return Expanded(
                             child: ListView.separated(
                                 scrollDirection: Axis.vertical,
@@ -83,7 +85,7 @@ class _MyOrderViewState extends State<MyOrderView> {
                                   onTap: () {
                                     navigateTo(
                                         AboutOrderView(
-                                          clientOrderId: bloc.model!.list[index].id,
+                                          clientOrderId: list[index].id,
 
                                         )).then((x){
                                       bloc.add(ClientOrderStartEvent(endPoint: 'current'));
@@ -97,7 +99,7 @@ class _MyOrderViewState extends State<MyOrderView> {
                                           crossAxisAlignment: CrossAxisAlignment.start,
                                           children: [
                                             Text(
-                                              'طلب #${bloc.model!.list[index].id}',
+                                              'طلب #${list[index].id}',
                                               style: TextStyle(
                                                   color: AppTheme.mainColor,
                                                   fontSize: 17.sp,
@@ -105,17 +107,17 @@ class _MyOrderViewState extends State<MyOrderView> {
                                                   FontWeight.bold),
                                             ),
                                             Text(
-                                              bloc.model!.list[index].date,
+                                              list[index].date,
                                               style: TextStyle(
                                                   fontSize: 14.sp,
                                                   color:
-                                                  AppTheme.mainGreyColor),
+                                                  AppTheme.mainColorText),
                                             ),
                                             Row(
                                               children: [
                                                 ...List.generate(
-                                                  bloc.model!.list[index].products.length < 3 ?
-                                                  bloc.model!.list[index].products.length:3, (i) =>
+                                                  list[index].products.length < 3 ?
+                                                  list[index].products.length:3, (i) =>
                                                     Container(
                                                   height: 25.h,
                                                   width: 25.w,
@@ -126,13 +128,13 @@ class _MyOrderViewState extends State<MyOrderView> {
                                                   child: Center(
                                                     child:ClipRRect(
                                                       borderRadius: BorderRadius.circular(10.r) ,
-                                                        child: AppImage(bloc.model!.list[index].products[i].url))
+                                                        child: AppImage(list[index].products[i].url))
                                                   ),
                                                 ), ),
                                                 SizedBox(
                                                   width: 5.w,
                                                 ),
-                                                bloc.model!.list[index].products.length <= 3
+                                                list[index].products.length <= 3
                                                     ?SizedBox():
                                                 Container(
                                                   height: 25.h,
@@ -144,7 +146,7 @@ class _MyOrderViewState extends State<MyOrderView> {
                                                   ),
                                                   child: Center(
                                                     child: Text(
-                                                     '+${bloc.model!.list[index].products.length-3}',
+                                                     '+${list[index].products.length-3}',
                                                       style: TextStyle(
                                                           color: AppTheme.mainColor,
                                                           fontSize: 11.sp,
@@ -164,25 +166,25 @@ class _MyOrderViewState extends State<MyOrderView> {
                                               width: 70.w,
                                               height: 23.h,
                                               decoration: BoxDecoration(
-                                                  color: bloc.model!.list[index].status=="in_way"
+                                                  color: list[index].status=="in_way"
                                                       ? Color(0xFFE6F5F0)
-                                                      : bloc.model!.list[index].status== "pending"
+                                                      : list[index].status== "pending"
                                                       ?AppTheme.thirdColor
-                                                      : bloc.model!.list[index].status== "canceled"
+                                                      : list[index].status== "canceled"
                                                       ?AppTheme.mainRedColor
                                                       :Colors.black,
                                                   borderRadius:
                                                   BorderRadius.circular(10.r)),
                                               child: Center(
                                                 child: Text(
-                                                  bloc.model!.list[index].status,
+                                                  list[index].status,
                                                   style: TextStyle(
                                                       fontSize: 11.sp,
-                                                      color: bloc.model!.list[index].status=="in_way"
+                                                      color: list[index].status=="in_way"
                                                           ? Color(0xFF2D9E78)
-                                                          :bloc.model!.list[index].status== "pending"
+                                                          :list[index].status== "pending"
                                                           ?AppTheme.mainColor
-                                                          : bloc.model!.list[index].status== "canceled"
+                                                          : list[index].status== "canceled"
                                                           ?Colors.red
                                                           :Colors.white
                                                   ),
@@ -193,7 +195,7 @@ class _MyOrderViewState extends State<MyOrderView> {
                                               height: 10.h,
                                             ),
                                             Text(
-                                              '${bloc.model!.list[index].orderPrice} ر.س',
+                                              '${list[index].orderPrice} ر.س',
                                               style: TextStyle(
                                                   fontSize: 13.sp,
                                                   color: AppTheme.mainColor),
@@ -207,10 +209,10 @@ class _MyOrderViewState extends State<MyOrderView> {
                                 separatorBuilder: (context, index) => SizedBox(
                                       height: 20.h,
                                     ),
-                                itemCount: bloc.model!.list.length),
+                                itemCount: list.length),
                           );
                         } else if (state is ClientOrderFailedState) {
-                          return AppFailed(msg: state.error);
+                          return AppFailed(msg: state.msg);
                         } else {
                           return AppLoading();
                         }

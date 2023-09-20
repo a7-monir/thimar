@@ -1,27 +1,26 @@
 
 import 'package:bloc/bloc.dart';
-
-import '../../../../helper/server_gate.dart';
 import '../../../../models/product_rate_model.dart';
+import '../../core/logic/server_gate.dart';
 
 part 'events.dart';
 part 'model.dart';
 part 'states.dart';
 
-class ProductBloc extends Bloc<ProductEvents,ProductState> {
-  ProductBloc(this.serverGate) :super (ProductState()) {
-    on<ShowProductStartEvent>(getShowProduct);
+class ProductBloc extends Bloc<ProductEvents,ProductStates> {
+  ProductBloc(this.serverGate) :super (ProductStates()) {
+    on<ShowProductStartEvent>(getData);
     on<GetProductRateStartEvent>(getProductRate);
     on<AddToFavoritesStartEvent>(AddToFavorite);
     on<RemoveFromFavoritesStartEvent>(RemoveFromFavorite);
   }
 
-  ShowProductModel? showProductModel;
-  ProductRateModel? productRateModel;
+  ProductRateData? productRateModel;
+  ShowProductData? showProductModel;
   final ServerGate serverGate;
 
 
-  void getShowProduct(ShowProductStartEvent event , Emitter<ProductState>emit) async {
+  void getData(ShowProductStartEvent event , Emitter<ProductStates>emit) async {
 
     
     emit (ShowProductLoadingState());
@@ -29,16 +28,16 @@ class ProductBloc extends Bloc<ProductEvents,ProductState> {
     final response = await serverGate.getFromServer(url: 'products/${event.productsId}');
 
     if(response.success){
-      showProductModel= ShowProductModel.fromJson(response.response!.data);
-      emit (ShowProductSuccessState());
+      final showProductModel= ShowProductData.fromJson(response.response!.data);
+      emit (ShowProductSuccessState(model: showProductModel));
     } else{
       emit(ShowProductFailedState(
-          error: response.msg,
-          errType: response.errType!));
+          msg: response.msg,
+          statusCode: response.errType!));
     }
   }
 
-  void getProductRate(GetProductRateStartEvent event, Emitter<ProductState>emit) async{
+  void getProductRate(GetProductRateStartEvent event, Emitter<ProductStates>emit) async{
 
     emit(GetProductRateLoadingState());
 
@@ -46,42 +45,42 @@ class ProductBloc extends Bloc<ProductEvents,ProductState> {
 
     if(response.success){
       print(response.response!.data.toString()+"000000000000000");
-      productRateModel = ProductRateModel.fromJson(response.response!.data);
-      emit(GetProductRateSuccessState());
+      final productRateModel = ProductRateData.fromJson(response.response!.data);
+      emit(GetProductRateSuccessState(model: productRateModel));
     }else{
       emit(GetProductRateFailedState(
-          error: response.msg,
-          errType: response.errType!));
+          msg: response.msg,
+          statusCode: response.errType!));
     }
 
   }
 
 
-  void AddToFavorite(AddToFavoritesStartEvent event, Emitter<ProductState>emit)async{
+  void AddToFavorite(AddToFavoritesStartEvent event, Emitter<ProductStates>emit)async{
 
     emit(AddToFavoriteLoadingState());
 
     final response = await serverGate.sendToServer(url: 'client/products/${event.productsId}/add_to_favorite');
     if(response.success){
-      emit(AddToFavoriteSuccessState());
+      emit(AddToFavoriteSuccessState(msg: response.msg));
 
     }else{
-      emit(AddToFavoriteFailedState( error: response.msg, errType: response.errType!));
+      emit(AddToFavoriteFailedState( msg: response.msg, statusCode: response.errType!));
     }
 
   }
 
 
-  void RemoveFromFavorite(RemoveFromFavoritesStartEvent event,Emitter<ProductState>emit)async{
+  void RemoveFromFavorite(RemoveFromFavoritesStartEvent event,Emitter<ProductStates>emit)async{
 
     emit(RemoveFromFavoriteLoadingState());
 
     final response = await serverGate.sendToServer(url: 'client/products/${event.productsId}/remove_from_favorite');
     if(response.success){
-      emit(RemoveFromFavoriteSuccessState());
+      emit(RemoveFromFavoriteSuccessState(msg: response.msg));
 
     }else{
-      emit(RemoveFromFavoriteFailedState(errType: response.errType!, error: response.msg));
+      emit(RemoveFromFavoriteFailedState(statusCode: response.errType!, msg: response.msg));
     }
 
   }

@@ -1,28 +1,28 @@
 part of 'bloc.dart';
 
-class AddressModel {
+class AddressData {
 
-  late final List<Data> list;
+  late final List<AddressModel> list;
 
-  AddressModel.fromJson(Map<String, dynamic> json){
+  AddressData.fromJson(Map<String, dynamic> json){
     print('=-=-=-=-=-=-=-=-=-=-=-=-=-=--------=-=-=-=-');
     print(json['data']);
-    list = List.from(json['data']).map((e)=>Data.fromJson(e)).toList();
+    list = List.from(json['data']).map((e)=>AddressModel.fromJson(e)).toList();
 
   }
 }
 
-class Data {
+class AddressModel {
   late final int id;
   late final String type,location, description,phone;
   late final double lat, lng;
   late final bool isDefault;
 
 
-  Data.fromJson(Map<String, dynamic> json){
+  AddressModel.fromJson(Map<String, dynamic> json){
     id = json['id']??0;
     type = json['type']??'';
-    lat = json['lat']??0.0;
+    lat = double.tryParse( json['lat'].toString())??0;
     lng = json['lng']??0.0;
     location = json['location']??'';
     description = json['description']??'';

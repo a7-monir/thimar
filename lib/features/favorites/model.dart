@@ -1,15 +1,15 @@
 part of 'bloc.dart';
-class FavoritesModel {
-  late final List<Data> list;
+class FavoritesData {
+  late final List<FavoritesModel> list;
 
 
-  FavoritesModel.fromJson(Map<String, dynamic> json){
-    list = List.from(json['data']??[]).map((e)=>Data.fromJson(e)).toList();
+  FavoritesData.fromJson(Map<String, dynamic> json){
+    list = List.from(json['data']??[]).map((e)=>FavoritesModel.fromJson(e)).toList();
 
   }
 }
 
-class Data {
+class FavoritesModel {
 
   late final num categoryId,id,priceBeforeDiscount,price,amount;
   late final String title, description, code,mainImage,createdAt;
@@ -18,7 +18,7 @@ class Data {
   late final Unit unit;
   late final List<Images> images;
 
-  Data.fromJson(Map<String, dynamic> json){
+  FavoritesModel.fromJson(Map<String, dynamic> json){
     categoryId = json['category_id']??0;
     id = json['id']??0;
     title = json['title']??'';

@@ -2,9 +2,9 @@
 
 import 'package:bloc/bloc.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:thimar/core/logic/helper_methods.dart';
 
-
-import '../../../../helper/server_gate.dart';
+import '../../core/logic/server_gate.dart';
 part 'events.dart';
 part 'states.dart';
 
@@ -31,9 +31,9 @@ class AddRateBloc extends Bloc<AddRateEvents,AddRateStates>{
     });
     if(response.success){
 
-      emit(AddRateSuccessState());
+      emit(AddRateSuccessState(msg: response.msg));
     } else {
-      emit(AddRateFailedState(type: response.errType!, error: response.msg));
+      emit(AddRateFailedState(statusCode: response.errType!, msg: response.msg));
     }
   }
 }

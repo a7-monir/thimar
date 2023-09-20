@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:kiwi/kiwi.dart';
-import 'package:thimar/constant/app_failed.dart';
-import 'package:thimar/constant/app_loading.dart';
-import '../constant/appbar.dart';
-import '../constant/notification_content.dart';
-import '../features/get_notifications/bloc.dart';
+import 'package:thimar/core/design/res/app_loading.dart';
+import '../core/design/res/app_failed.dart';
+import '../core/design/res/appbar.dart';
+import '../core/design/res/notification_content.dart';
+import '../features/notifications/bloc.dart';
 
 class NotificationsView extends StatefulWidget {
   const NotificationsView({Key? key}) : super(key: key);
@@ -32,32 +32,22 @@ class _NotificationsViewState extends State<NotificationsView> {
               if(state is NotificationsLoadingState){
                 return AppLoading();
               }else if (state is NotificationsSuccessState){
+                final list =state.model.data.list;
                 return ListView.separated(
                   physics: NeverScrollableScrollPhysics(),
                     shrinkWrap: true,
                     itemBuilder: (context, index) =>
                         NotificationsContent(
-                            icon: bloc.model!.list.list[index].image,
-                            title: bloc.model!.list.list[index].title,
-                            hint: bloc.model!.list.list[index].body,
-                            time: bloc.model!.list.list[index].createdAt),
+                            icon:  list[index].image,
+                            title:  list[index].title,
+                            hint:  list[index].body,
+                            time:  list[index].createdAt),
                     separatorBuilder: (context, index) => SizedBox(height: 20.h,),
-                    itemCount: bloc.model!.list.list.length);
+                    itemCount:  list.length);
 
-                //   Column(
-                //   children: [
-                //     const NotificationsContent(
-                //         icon: 'assets/icons/note.png',
-                //         title: 'تم قبول طلبك وجاري تحضيره الأن',
-                //         hint: 'هذا النص هو مثال لنص يمكن أن يستبدل في نفس المساحة، لقد تم توليد هذا النص من مولد النص العربى',
-                //         time: 'منذ ساعتان'),
-                //
-                //
-                //
-                //   ],
-                // );
+
               }else if (state is NotificationsFailedState){
-                return AppFailed(msg: state.error);
+                return AppFailed(msg: state.msg);
               } return SizedBox(height: 10,);
 
             },

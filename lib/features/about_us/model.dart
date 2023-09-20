@@ -1,18 +1,18 @@
 part of 'bloc.dart';
 
-class AboutModel {
+class AboutData {
 
-  late final Data list;
+  late final AboutModel model;
 
-  AboutModel.fromJson(Map<String, dynamic> json){
-    list = Data.fromJson(json['data']??{});
+  AboutData.fromJson(Map<String, dynamic> json){
+    model = AboutModel.fromJson(json['data']??{});
   }
 }
 
-class Data {
+class AboutModel {
   late final String about;
 
-  Data.fromJson(Map<String, dynamic> json){
+  AboutModel.fromJson(Map<String, dynamic> json){
     about = json['about']??'';
   }
 }

@@ -3,7 +3,7 @@ part of 'bloc.dart';
 class AboutOrderEvent{}
 
 class AboutOrderStartEvent extends AboutOrderEvent{
-  int id;
+  final int id;
   AboutOrderStartEvent({required this.id});
 }
 

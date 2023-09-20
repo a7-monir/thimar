@@ -2,17 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:kiwi/kiwi.dart';
-import 'package:thimar/constant/app_failed.dart';
-import 'package:thimar/constant/app_image.dart';
-import 'package:thimar/constant/app_loading.dart';
-import 'package:thimar/helper/helper_methods.dart';
-import '../../constant/app_button.dart';
-import '../../helper/app_theme.dart';
-import '../constant/appbar.dart';
+
+import 'package:thimar/core/design/res/app_loading.dart';
+import '../core/design/res/app_button.dart';
+import '../core/logic/app_theme.dart';
+import '../core/design/res/app_failed.dart';
+import '../core/design/res/app_image.dart';
+import '../core/design/res/appbar.dart';
+import '../core/logic/helper_methods.dart';
+import '../core/logic/toast.dart';
 import '../features/add_to_cart/bloc.dart';
 import '../features/sections/bloc.dart';
-import '../helper/toast.dart';
-import 'home/widget/search.dart';
+import 'search.dart';
 
 import 'show_product.dart';
 
@@ -60,6 +61,7 @@ class _SectionsViewState extends State<SectionsView> {
           if (state is CategoriesProductLoadingState) {
             return AppLoading();
           } else if (state is CategoriesProductSuccessState) {
+            final list =state.model.list;
             return SingleChildScrollView(
               child: Column(
                 children: [
@@ -352,14 +354,14 @@ class _SectionsViewState extends State<SectionsView> {
                       mainAxisExtent: 330,
                       crossAxisSpacing: 16.h,
                     ),
-                    itemCount: bloc.model!.list.length,
+                    itemCount:list.length,
                     itemBuilder: (context, index) {
                       return InkWell(
                           onTap: () {
                             navigateTo(ShowProduct(
-                              productsId: bloc.model!.list[index].id,
-                              productsName: bloc.model!.list[index].title,
-                              isFavorite: bloc.model!.list[index].isFavorite,
+                              productsId: list[index].id,
+                              productsName:  list[index].title,
+                              isFavorite:  list[index].isFavorite,
                             ));
                           },
                           child: Container(
@@ -392,10 +394,10 @@ class _SectionsViewState extends State<SectionsView> {
                                               BorderRadius.circular(11.r),
                                           color: const Color(0xFFFFFCF7),
                                         ),
-                                        child: AppImage( bloc.model!.list[index].mainImage,fit: BoxFit.fill,w:double.infinity,),
+                                        child: AppImage(  list[index].mainImage,fit: BoxFit.fill,w:double.infinity,),
 
                                       ),
-                                      if (bloc.model!.list[index].discount !=
+                                      if ( list[index].discount !=
                                           null)
                                         Container(
                                           clipBehavior: Clip.antiAlias,
@@ -410,7 +412,7 @@ class _SectionsViewState extends State<SectionsView> {
                                             color: AppTheme.mainColor,
                                           ),
                                           child: Text(
-                                            '${(bloc.model!.list[index].discount * 100).toInt()}%',
+                                            '${( list[index].discount * 100).toInt()}%',
                                             style: TextStyle(
                                                 fontSize: 14.sp,
                                                 fontWeight: FontWeight.w900,
@@ -428,7 +430,7 @@ class _SectionsViewState extends State<SectionsView> {
                                   mainAxisAlignment: MainAxisAlignment.start,
                                   children: [
                                     Text(
-                                      bloc.model!.list[index].title,
+                                       list[index].title,
                                       style: TextStyle(
                                           fontSize: 12.sp,
                                           fontWeight: FontWeight.w900,
@@ -438,7 +440,7 @@ class _SectionsViewState extends State<SectionsView> {
                                       height: 8,
                                     ),
                                     Text(
-                                      "السعر / ${bloc.model!.list[index].unit.name}",
+                                      "السعر / ${ list[index].unit.name}",
                                       style: TextStyle(
                                           fontSize: 12.sp,
                                           fontWeight: FontWeight.w900,
@@ -450,7 +452,7 @@ class _SectionsViewState extends State<SectionsView> {
                                     Row(
                                       children: [
                                         Text(
-                                          "${bloc.model!.list[index].price} ر٫س",
+                                          "${ list[index].price} ر٫س",
                                           style: TextStyle(
                                               fontSize: 12.sp,
                                               fontWeight: FontWeight.w900,
@@ -459,10 +461,10 @@ class _SectionsViewState extends State<SectionsView> {
                                         SizedBox(
                                           width: 8.w,
                                         ),
-                                        if (bloc.model!.list[index]
+                                        if ( list[index]
                                                 .priceBeforeDiscount != null)
                                           Text(
-                                            "${bloc.model!.list[index].priceBeforeDiscount} ر٫س",
+                                            "${ list[index].priceBeforeDiscount} ر٫س",
                                             // overflow: TextOverflow.ellipsis,
                                             style: TextStyle(
                                               color: AppTheme.mainColor,
@@ -598,7 +600,7 @@ class _SectionsViewState extends State<SectionsView> {
                                           text: "أضف للسلة",
                                           onTap: () {
                                             addToCartBloc.productId =
-                                                bloc.model!.list[index].id;
+                                                 list[index].id;
                                             addToCartBloc
                                                 .add(AddToCartStartEvent());
                                             Toast.show(

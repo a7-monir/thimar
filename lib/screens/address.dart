@@ -3,14 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:kiwi/kiwi.dart';
-import 'package:thimar/constant/app_failed.dart';
-import 'package:thimar/constant/app_loading.dart';
-import 'package:thimar/constant/appbar.dart';
+import 'package:thimar/core/design/res/app_loading.dart';
 import 'package:thimar/core/design/res/colors.dart';
-import '../constant/app_button.dart';
-import '../constant/app_image.dart';
+import '../core/design/res/app_button.dart';
+import '../core/design/res/app_failed.dart';
+import '../core/design/res/app_image.dart';
+import '../core/design/res/appbar.dart';
 import '../features/address/bloc.dart';
-import '../helper/app_theme.dart';
+import '../core/logic/app_theme.dart';
 
 class AddressView extends StatefulWidget {
    AddressView({super.key});
@@ -40,6 +40,7 @@ class _AddressViewState extends State<AddressView> {
             if(state is GetAddressLoadingState){
               return AppLoading();
             }else if (state is GetAddressSuccessState){
+              var list = state.model.list;
               return SingleChildScrollView(
                 child: Padding(
                   padding: EdgeInsets.symmetric(horizontal: 16.w),
@@ -67,19 +68,19 @@ class _AddressViewState extends State<AddressView> {
                                     crossAxisAlignment: CrossAxisAlignment.start,
 
                                     children: [
-                                      Text(bloc.model!.list[index].type,
+                                      Text(list[index].type,
                                         style: TextStyle(color: AppTheme.mainColor,
                                             fontSize: 15.sp,
                                             fontWeight: FontWeight.bold),),
-                                      Text(bloc.model!.list[index].location,
+                                      Text(list[index].location,
                                         style: TextStyle(color: AppTheme.mainColor,
                                           fontSize: 14.sp,
                                         ),),
-                                      Text(bloc.model!.list[index].description,
+                                      Text(list[index].description,
                                         style: TextStyle(color: AppTheme.mainColor,
                                           fontSize: 14.sp,
                                         ),),
-                                      Text(bloc.model!.list[index].phone,
+                                      Text(list[index].phone,
                                         style: TextStyle(color: AppTheme.mainColor,
                                           fontSize: 14.sp,
                                         ),),
@@ -89,7 +90,7 @@ class _AddressViewState extends State<AddressView> {
                                   InkWell(
                                     onTap: (){
                                       bloc.add(DeleteAddressStartEvent(
-                                          id: bloc.model!.list[index].id,
+                                          id: list[index].id,
                                         index: index
                                       ));
 
@@ -121,7 +122,7 @@ class _AddressViewState extends State<AddressView> {
                           separatorBuilder: (context, index) => SizedBox(
                             height: 20.h,
                           ),
-                          itemCount: bloc.model!.list.length),
+                          itemCount: list.length),
 
                       SizedBox(
                         height: 20.h,
@@ -144,7 +145,7 @@ class _AddressViewState extends State<AddressView> {
                 ),
               );
             }else if (state is GetAddressFailedState){
-              return AppFailed(msg: state.error);
+              return AppFailed(msg: state.msg);
             }else{
               return AppLoading();
             }

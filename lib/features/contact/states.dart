@@ -1,31 +1,40 @@
 part of 'bloc.dart';
-class ContactState{}
+class ContactStates{}
 
-class ContactLoadingState extends ContactState {}
+class ContactLoadingState extends ContactStates {}
 
-class ContactSuccessState extends ContactState {
+class ContactSuccessState extends ContactStates {
+  final ContactData model;
+  ContactSuccessState({required this.model}){
+
+  }
 }
 
-class ContactFailedState extends ContactState {
-  String error;
-  int errType;
+class ContactFailedState extends ContactStates {
+  String msg;
+  int statusCode;
   ContactFailedState({
-    required this.error,
-    required this.errType,
+    required this.msg,
+    required this.statusCode,
   });
 }
 
 
 
-class CreateContactLoadingState extends ContactState {}
+class CreateContactLoadingState extends ContactStates {}
 
-class CreateContactSuccessState extends ContactState {}
+class CreateContactSuccessState extends ContactStates {
+  final String msg;
+  CreateContactSuccessState({required this.msg}){
+    showMessage(msg);
+  }
+}
 
-class CreateContactFailedState extends ContactState {
-  String error;
-  int errType;
+class CreateContactFailedState extends ContactStates {
+  String msg;
+  int statusCode;
   CreateContactFailedState({
-    required this.error,
-    required this.errType,
+    required this.msg,
+    required this.statusCode,
   });
 }

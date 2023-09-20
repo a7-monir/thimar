@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:kiwi/kiwi.dart';
-import 'package:thimar/constant/app_image.dart';
-import 'package:thimar/constant/app_loading.dart';
-import 'package:thimar/helper/helper_methods.dart';
-import '../../../../constant/app_button.dart';
+import 'package:thimar/core/design/res/app_loading.dart';
+import '../../../core/design/res/app_button.dart';
 import '../../../../features/add_to_cart/bloc.dart';
 import '../../../../features/get_products/bloc.dart';
-import '../../../../helper/app_theme.dart';
+import '../../../core/logic/app_theme.dart';
+import '../../../core/design/res/app_image.dart';
+import '../../../core/logic/helper_methods.dart';
 import '../../show_product.dart';
 
 
@@ -43,8 +43,9 @@ class _GetProductsState extends State<GetProducts> {
           return AppLoading();
         }else if (
         state is GetProductsSuccessState){
+          var list = state.model.list;
           return GridView.builder(
-            itemCount: getProductBloc.getProductsModel!.list.length,
+            itemCount: list.length,
             shrinkWrap: true,
             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: 2,
@@ -59,9 +60,9 @@ class _GetProductsState extends State<GetProducts> {
                 onTap: (){
                   navigateTo(
                     ShowProduct(
-                    productsId: getProductBloc.getProductsModel!.list[index].id,
-                    productsName: getProductBloc.getProductsModel!.list[index].title,
-                      isFavorite: getProductBloc.getProductsModel!.list[index].isFavorite,
+                    productsId: list[index].id,
+                    productsName: list[index].title,
+                      isFavorite: list[index].isFavorite,
                   ),);
                 },
                 child: Container(
@@ -96,9 +97,9 @@ class _GetProductsState extends State<GetProducts> {
                                  color: const Color(0xFFFFFCF7),
                               ),
                               child:
-                              AppImage(getProductBloc.getProductsModel!.list[index].mainImage, fit: BoxFit.fill, w: double.infinity,),
+                              AppImage(list[index].mainImage, fit: BoxFit.fill, w: double.infinity,),
                             ),
-                            if (getProductBloc.getProductsModel!.list[index].discount != null)
+                            if (list[index].discount != null)
                               Container(
                                 clipBehavior: Clip.antiAlias,
                                 padding:EdgeInsets.symmetric(horizontal: 10.w,vertical: 3.h) ,
@@ -109,7 +110,7 @@ class _GetProductsState extends State<GetProducts> {
                                   color: AppTheme.mainColor,
                                 ),
                                 child: Text(
-                                 '${(getProductBloc.getProductsModel!.list[index].discount*100).toInt()}%' ,
+                                 '${(list[index].discount*100).toInt()}%' ,
                                   style:  TextStyle(fontSize: 14.sp,
                                       fontWeight: FontWeight.w900, color: Colors.white),
                                 ),
@@ -125,13 +126,13 @@ class _GetProductsState extends State<GetProducts> {
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
                           Text(
-                            getProductBloc.getProductsModel!.list[index].title,
+                            list[index].title,
                             style: TextStyle(fontSize: 12.sp, fontWeight: FontWeight.w900, color: AppTheme.mainColor),
                           ),
                            SizedBox(
                             height: 8.h,
                           ),
-                          Text("السعر/${getProductBloc.getProductsModel!.list[index].unit.name}",
+                          Text("السعر/${list[index].unit.name}",
                             style: TextStyle(fontSize: 12.sp, fontWeight: FontWeight.w900, color: Color(0xFF808080)),
 
                           ),
@@ -141,15 +142,15 @@ class _GetProductsState extends State<GetProducts> {
                           Row(
                             children: [
                               Text(
-                                "${getProductBloc.getProductsModel!.list[index].price.toInt()} ر٫س",
+                                "${list[index].price.toInt()} ر٫س",
                                 style: TextStyle(fontSize: 12.sp, fontWeight: FontWeight.w900, color: AppTheme.mainColor),
                               ),
                               SizedBox(
                                 width: 8.w,
                               ),
-                              if (getProductBloc.getProductsModel!.list[index].priceBeforeDiscount != null)
+                              if (list[index].priceBeforeDiscount != null)
                                 Text(
-                                  "${getProductBloc.getProductsModel!.list[index].priceBeforeDiscount} ر٫س",
+                                  "${list[index].priceBeforeDiscount} ر٫س",
                                   // overflow: TextOverflow.ellipsis,
                                   style: TextStyle(
                                     color: AppTheme.mainColor,
@@ -256,9 +257,9 @@ class _GetProductsState extends State<GetProducts> {
                                 return AppButton(
                               text: 'أضف للسلة',
                               onTap: (){
-                                addToCartBloc.productId = getProductBloc.getProductsModel!.list[index].id;
+                                list[index].id;
                                 addToCartBloc.add(AddToCartStartEvent());
-                                //Toast.show(addToCartBloc.addToCartModel!.message, context);
+
                               },
                               height: 30.h,
                               width: 115.w,
@@ -276,7 +277,7 @@ class _GetProductsState extends State<GetProducts> {
              );
         }else if (state is GetProductsFailedState){
           return Center(
-            child: Text(state.error),
+            child: Text(state.msg),
           );
         }else {
           return AppLoading();

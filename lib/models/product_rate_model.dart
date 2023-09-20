@@ -1,16 +1,16 @@
-class ProductRateModel {
-  late final List<Data> list;
+class ProductRateData {
+  late final List<ProductRateModel> list;
 
-  ProductRateModel.fromJson(Map<String, dynamic> json) {
-    list = List.from(json['data'] ?? []).map((e) => Data.fromJson(e)).toList();
+  ProductRateData.fromJson(Map<String, dynamic> json) {
+    list = List.from(json['data'] ?? []).map((e) => ProductRateModel.fromJson(e)).toList();
   }
 }
 
-class Data {
+class ProductRateModel {
   late final int value;
   late final String comment, clientName, clientImage;
 
-  Data.fromJson(Map<String, dynamic> json) {
+  ProductRateModel.fromJson(Map<String, dynamic> json) {
     value = json['value'] ?? 0;
     comment = json['comment'] ?? '';
     clientName = json['client_name'] ?? '';

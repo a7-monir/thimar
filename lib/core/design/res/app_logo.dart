@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:thimar/constant/app_image.dart';
+
+import 'app_image.dart';
+
 
 class AppLogo extends StatefulWidget {
   const AppLogo({Key? key}) : super(key: key);

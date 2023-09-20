@@ -1,28 +1,35 @@
 part of 'bloc.dart';
 
-class RegisterState{}
+class RegisterStates{}
 
-class RegisterLoadingState extends RegisterState {}
+class RegisterLoadingState extends RegisterStates {}
 
-class RegisterSuccessState extends RegisterState {}
+class RegisterSuccessState extends RegisterStates {
+ final RegisterModel model;
+ final String msg;
+ RegisterSuccessState({
+    required this.model,
+   required this.msg,
+  }){showMessage(msg);}
+}
 
-class RegisterFailState extends RegisterState {
-  int type;
-  String error;
+class RegisterFailState extends RegisterStates {
+  int statusCode;
+  String msg;
   RegisterFailState({
-    required this.type,
-    required this.error,
+    required this.statusCode,
+    required this.msg,
   });
 }
 
-class RegisterGetCitiesLoadingState extends RegisterState {}
+class RegisterGetCitiesLoadingState extends RegisterStates {}
 
-class RegisterGetCitiesSuccessState extends RegisterState {
+class RegisterGetCitiesSuccessState extends RegisterStates {
   final CityDataModel model;
   RegisterGetCitiesSuccessState({required this.model});
 }
 
-class RegisterGetCitiesFailState extends RegisterState {
-  final String error;
-  RegisterGetCitiesFailState({required this.error});
+class RegisterGetCitiesFailState extends RegisterStates {
+  final String msg;
+  RegisterGetCitiesFailState({required this.msg});
 }

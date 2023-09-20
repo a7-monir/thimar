@@ -1,18 +1,18 @@
 part of 'bloc.dart';
 
-class PolicyModel {
-  late final Data list;
+class PolicyData {
+  late final PolicyModel data;
 
-  PolicyModel.fromJson(Map<String, dynamic> json){
-    list = Data.fromJson(json['data']);
+  PolicyData.fromJson(Map<String, dynamic> json){
+    data = PolicyModel.fromJson(json['data']);
 
   }
 }
 
-class Data {
+class PolicyModel {
   late final String policy;
 
-  Data.fromJson(Map<String, dynamic> json){
+  PolicyModel.fromJson(Map<String, dynamic> json){
     policy = json['policy']??'';
   }
 }

@@ -1,15 +1,17 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:thimar/core/logic/helper_methods.dart';
 import 'package:thimar/features/login/bloc.dart';
-import '../../../../helper/server_gate.dart';
-import '../../../../helper/toast.dart';
+
+import '../../core/logic/server_gate.dart';
+import '../../core/logic/toast.dart';
 part 'events.dart';
 part 'model.dart';
 part 'states.dart';
 
-class RegisterBloc extends Bloc<RegisterEvents,RegisterState>{
+class RegisterBloc extends Bloc<RegisterEvents,RegisterStates>{
 
-  RegisterBloc(this.serverGate):super (RegisterState() ){
+  RegisterBloc(this.serverGate):super (RegisterStates() ){
     on<RegisterGetCitiesStartEvents>(_getCitiesData);
     on<RegisterStartEvents>(Register);
 
@@ -20,7 +22,7 @@ class RegisterBloc extends Bloc<RegisterEvents,RegisterState>{
 
   String? cityId;
   String? cityName;
-  RegisterModel?model;
+
   final fullNameController=TextEditingController();
   final passwordController=TextEditingController();
   final confirmationPasswordController=TextEditingController();
@@ -67,20 +69,20 @@ class RegisterBloc extends Bloc<RegisterEvents,RegisterState>{
     }
   }
 
-  void _getCitiesData(RegisterGetCitiesStartEvents event,Emitter<RegisterState> emit )async{
+  void _getCitiesData(RegisterGetCitiesStartEvents event,Emitter<RegisterStates> emit )async{
 
     emit(RegisterGetCitiesLoadingState());
-    CustomResponse response =await serverGate.getFromServer(
+    final response =await serverGate.getFromServer(
         url: 'cities/1',);
     if (response.success) {
       final model = CityDataModel.fromJson(response.response!.data);
       emit(RegisterGetCitiesSuccessState(model: model));
     } else {
-      emit(RegisterGetCitiesFailState(error: response.msg.toString()));
+      emit(RegisterGetCitiesFailState(msg: response.msg.toString()));
     }
   }
 
-  void Register (RegisterStartEvents event, Emitter <RegisterState> emit) async{
+  void Register (RegisterStartEvents event, Emitter <RegisterStates> emit) async{
     emit(RegisterLoadingState());
 
     CustomResponse response = await serverGate.sendToServer(
@@ -98,10 +100,10 @@ class RegisterBloc extends Bloc<RegisterEvents,RegisterState>{
     );
     if (response.success)
     {
-      model = RegisterModel.fromJson(response.response!.data);
-      emit(RegisterSuccessState());
+      final registerModel = RegisterModel.fromJson(response.response!.data);
+      emit(RegisterSuccessState(model:registerModel, msg: response.msg));
     }else {
-      emit(RegisterFailState(type:response.errType!, error: response.msg));
+      emit(RegisterFailState(statusCode:response.errType!, msg: response.msg));
     }
   }
 

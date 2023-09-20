@@ -2,7 +2,9 @@
 
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
-import '../../../../../../helper/server_gate.dart';
+
+import '../../core/logic/helper_methods.dart';
+import '../../core/logic/server_gate.dart';
 part 'events.dart';
 part 'states.dart';
 
@@ -34,11 +36,11 @@ class EditPasswordBloc extends Bloc<EditPasswordEvents,EditPasswordStates>{
           '_method':'PUT',
         });
     if(response.success){
-      emit(EditPasswordSuccessState());
+      emit(EditPasswordSuccessState(msg: response.msg));
     }
     else{
       emit(EditPasswordFailState(
-          type: response.errType!, error: response.msg
+          statusCode: response.errType!, msg: response.msg
       ));
     }
   }

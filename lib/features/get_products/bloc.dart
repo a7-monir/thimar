@@ -1,34 +1,35 @@
 
 import 'package:bloc/bloc.dart';
-import '../../helper/server_gate.dart';
+
+import '../../core/logic/server_gate.dart';
 part 'events.dart';
 part 'model.dart';
 part 'states.dart';
 
-class GetProductsBloc extends Bloc<GetProductsEvent,GetProductsState>{
+class GetProductsBloc extends Bloc<GetProductsEvents,ProductsStates>{
 
 
-  GetProductsBloc(this.serverGate) : super(GetProductsState()) {
+  GetProductsBloc(this.serverGate) : super(ProductsStates()) {
     on<GetProductsStartEvent>(GetProducts);
 
   }
 
   final ServerGate serverGate;
-  GetProductsModel? getProductsModel;
 
 
-  void GetProducts(GetProductsStartEvent event, Emitter<GetProductsState> emit) async {
+
+  void GetProducts(GetProductsStartEvent event, Emitter<ProductsStates> emit) async {
     emit(GetProductsLoadingState());
 
     final response = await serverGate.getFromServer(
       url: 'products',
     );
     if (response.success) {
-      getProductsModel = GetProductsModel.fromJson(response.response!.data);
-      emit(GetProductsSuccessState());
+      final productsModel = ProductsData.fromJson(response.response!.data);
+      emit(GetProductsSuccessState(model:productsModel));
     } else {
       emit(GetProductsFailedState(
-          error: response.msg, errType: response.errType!));
+          msg: response.msg, statusCode: response.errType!));
     }
   }
   

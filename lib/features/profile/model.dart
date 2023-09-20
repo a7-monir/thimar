@@ -1,25 +1,23 @@
 part of 'bloc.dart';
 
-class ProfileModel {
-  late final Data list;
+class ProfileData {
+  late final ProfileModel data;
 
 
-  ProfileModel.fromJson(Map<String, dynamic> json){
-    list = Data.fromJson(json['data']??{});
+  ProfileData.fromJson(Map<String, dynamic> json){
+    data = ProfileModel.fromJson(json['data']??{});
   }
 
 }
 
-class Data {
+class ProfileModel {
 
   late final int id;
-  late final String fullname;
-  late final String phone;
-  late final String image;
+  late final String fullname, phone, image;
   late final City city;
   late final int isVip;
 
-  Data.fromJson(Map<String, dynamic> json){
+  ProfileModel.fromJson(Map<String, dynamic> json){
     id = json['id']??0;
     fullname = json['fullname']??'';
     phone = json['phone']??'';

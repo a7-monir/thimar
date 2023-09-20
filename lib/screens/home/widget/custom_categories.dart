@@ -4,9 +4,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:kiwi/kiwi.dart';
-import 'package:thimar/constant/app_loading.dart';
-import 'package:thimar/helper/helper_methods.dart';
+import 'package:thimar/core/design/res/app_loading.dart';
 import '../../../../features/categories/bloc.dart';
+import '../../../core/logic/helper_methods.dart';
 import '../../sections.dart';
 
 
@@ -28,13 +28,14 @@ class _CustomCategoryState extends State<CustomCategory> {
     return BlocBuilder(
       bloc: bloc,
       builder: (context, state) {
-        if (state is CategoriesLoadingState) {
-          return AppLoading();
-        }
-        else if (state is CategoriesSuccessState) {
-          var data = bloc.categoriesModel!.list;
+        if (state is CategoriesFailedState) {
+          return Center(
+            child: Text(state.msg),
+          );
+        } else if (state is CategoriesSuccessState) {
+          var list = state.model.list;
           return GridView.builder(
-            itemCount: bloc.categoriesModel!.list.length,
+            itemCount: list.length,
             shrinkWrap: true,
             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: 1,
@@ -48,10 +49,10 @@ class _CustomCategoryState extends State<CustomCategory> {
             itemBuilder: (context, index) {
               return InkWell(
                 onTap: () {
-                  debugPrint("${data[index].id}");
+                  debugPrint("${list[index].id}");
                   navigateTo( SectionsView(
-                    categoryId: data[index].id,
-                    categoryName: data[index].name,
+                    categoryId: list[index].id,
+                    categoryName: list[index].name,
 
                   ),);
                 },
@@ -65,8 +66,8 @@ class _CustomCategoryState extends State<CustomCategory> {
                           Container(
                             decoration: BoxDecoration(
                               color: Color(
-                                      (math.Random().nextDouble() * 0x32EFCC7C)
-                                          .toInt())
+                                  (math.Random().nextDouble() * 0x32EFCC7C)
+                                      .toInt())
                                   .withOpacity(0.1),
                               borderRadius: BorderRadius.circular(10.r),
                             ),
@@ -76,16 +77,16 @@ class _CustomCategoryState extends State<CustomCategory> {
                             padding: EdgeInsets.all(15.r),
                             child: Image.network(
                               // 'assets/icons/fruits_icon.png',
-                              data[index].media,
+                              list[index].media,
                               width: double.infinity,
                               fit: BoxFit.fill,
                             ),
                           ),
-                           SizedBox(
+                          SizedBox(
                             height: 10.h,
                           ),
                           Text(
-                            data[index].name,
+                            list[index].name,
                             style:  TextStyle(
                               fontSize: 12.sp,
                               fontWeight: FontWeight.w900,
@@ -101,14 +102,12 @@ class _CustomCategoryState extends State<CustomCategory> {
             },
           );
         }
-        else if (state is CategoriesFailedState) {
-          return Center(
-            child: Text(state.error),
-          );
-        } else {
+       else if (state is CategoriesLoadingState) {
           return AppLoading();
+        }else {
+          return Text("Something Wrong");
         }
-      },
+        },
     );
   }
 }

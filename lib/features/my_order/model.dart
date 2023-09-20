@@ -1,25 +1,25 @@
 part of 'bloc.dart';
 
-class OrderModel {
-  late final List<OrderData> list;
+class OrderData {
+  late final List<OrderModel> list;
 
 
 
-  OrderModel.fromJson(Map<String, dynamic> json){
-    list = List.from(json['data']).map((e)=>OrderData.fromJson(e)).toList();
+  OrderData.fromJson(Map<String, dynamic> json){
+    list = List.from(json['data']).map((e)=>OrderModel.fromJson(e)).toList();
 
 
   }
 
 }
-class OrderData {
+class OrderModel {
   late final int id,vipDiscountPercentage;
   late final String status, date, time, clientName, phone, location, deliveryPayer, payType, note;
   late final num  orderPrice,deliveryPrice,totalPrice;
   late final List<Products> products;
   late final bool isVip;
 
-  OrderData.fromJson(Map<String, dynamic> json){
+  OrderModel.fromJson(Map<String, dynamic> json){
     id = json['id']??0;
     status = json['status']??'';
     date = json['date']??'';

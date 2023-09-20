@@ -3,18 +3,17 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:kiwi/kiwi.dart';
-import 'package:thimar/constant/app_button.dart';
-import 'package:thimar/constant/app_failed.dart';
-import 'package:thimar/constant/app_image.dart';
-import 'package:thimar/constant/app_loading.dart';
-import 'package:thimar/helper/app_theme.dart';
+import 'package:thimar/core/design/res/app_button.dart';
+
+import 'package:thimar/core/design/res/app_loading.dart';
+import 'package:thimar/core/logic/app_theme.dart';
 import 'package:card_swiper/card_swiper.dart';
-import 'package:thimar/helper/toast.dart';
-
-
+import '../core/design/res/app_failed.dart';
+import '../core/design/res/app_image.dart';
+import '../core/logic/toast.dart';
 import '../features/add_to_cart/bloc.dart';
 import '../features/show_product/bloc.dart';
-import '../helper/custom_text.dart';
+import '../core/logic/custom_text.dart';
 import 'cart/view.dart';
 import 'home/widget/custom_get_products.dart';
 
@@ -41,7 +40,7 @@ class _ShowProductState extends State<ShowProduct> {
     ..add(AddToCartStartEvent());
 
   AddFavModel? favModel;
-  ShowProductModel? showProductModel;
+  ShowProductData? showProductModel;
 
   @override
   void initState() {
@@ -111,7 +110,6 @@ class _ShowProductState extends State<ShowProduct> {
                       }else{
                         bloc.add(RemoveFromFavoritesStartEvent(productsId: widget.productsId));
                       }
-                      Toast.show(bloc.showProductModel!.message, context);
                     },
                     child: widget.isFavorite == false
                         ? Icon(
@@ -141,6 +139,7 @@ class _ShowProductState extends State<ShowProduct> {
             if (state is ShowProductLoadingState) {
               return AppLoading();
             } else if (state is ShowProductSuccessState) {
+              final data = state.model.data;
               return SafeArea(
                 child: SingleChildScrollView(
                   child: Column(
@@ -159,7 +158,7 @@ class _ShowProductState extends State<ShowProduct> {
                               Swiper(
                                 itemBuilder: (BuildContext context, index) {
                                   return AppImage(
-                                    bloc.showProductModel!.data.images[index]
+                                    data.images[index]
                                         .url,
                                     w: MediaQuery.of(context).size.width.w,
                                     h: MediaQuery.of(context).size.height.h,
@@ -168,7 +167,7 @@ class _ShowProductState extends State<ShowProduct> {
                                 },
                                 autoplay: true,
                                 itemCount:
-                                    bloc.showProductModel!.data.images.length,
+                                   data.images.length,
                                 scrollDirection: Axis.horizontal,
                                 pagination: SwiperPagination(
                                   alignment: Alignment.bottomCenter,
@@ -205,7 +204,7 @@ class _ShowProductState extends State<ShowProduct> {
                                   height: 4.h,
                                 ),
                                 Text(
-                                  "السعر / ${bloc.showProductModel!.data.unit.name}",
+                                  "السعر / ${data.unit.name}",
                                   style: TextStyle(
                                       fontSize: 19.sp,
                                       color: Color(0xFF808080)),
@@ -219,7 +218,7 @@ class _ShowProductState extends State<ShowProduct> {
                                 Row(
                                   children: [
                                     Text(
-                                      "${(bloc.showProductModel!.data.discount * 100).toInt()}%",
+                                      "${(data.discount * 100).toInt()}%",
                                       style: TextStyle(
                                           fontSize: 13.sp,
                                           fontWeight: FontWeight.w900,
@@ -229,7 +228,7 @@ class _ShowProductState extends State<ShowProduct> {
                                       width: 8.w,
                                     ),
                                     Text(
-                                      "${bloc.showProductModel!.data.price} ر٫س",
+                                      "${ data.price} ر٫س",
                                       style: TextStyle(
                                           fontSize: 17.sp,
                                           fontWeight: FontWeight.w900,
@@ -239,7 +238,7 @@ class _ShowProductState extends State<ShowProduct> {
                                       width: 4.w,
                                     ),
                                     Text(
-                                      "${bloc.showProductModel!.data.priceBeforeDiscount} ر٫س",
+                                      "${ data.priceBeforeDiscount} ر٫س",
                                       // overflow: TextOverflow.ellipsis,
                                       style: TextStyle(
                                         color: AppTheme.mainColor,
@@ -351,7 +350,7 @@ class _ShowProductState extends State<ShowProduct> {
                               width: 10.w,
                             ),
                             Text(
-                              bloc.showProductModel!.data.code,
+                               data.code,
                               style: TextStyle(
                                   fontSize: 12.sp,
                                   fontWeight: FontWeight.w900,
@@ -382,7 +381,7 @@ class _ShowProductState extends State<ShowProduct> {
                               height: 15.h,
                             ),
                             Text(
-                              bloc.showProductModel!.data.description,
+                               data.description,
                               style: TextStyle(
                                   fontSize: 14.sp,
                                   color: Color(0xFF808080),
@@ -577,7 +576,7 @@ class _ShowProductState extends State<ShowProduct> {
               );
             } else if (state is ShowProductFailedState) {
               return AppFailed(
-                msg: state.error,
+                msg: state.msg,
               );
             } else {
               return AppLoading();
@@ -724,7 +723,7 @@ class _ShowProductState extends State<ShowProduct> {
                                                             height: 3.h,
                                                           ),
                                                           Text(
-                                                            " ${bloc.showProductModel!.data.price * quantity}ر٫س",
+                                                            " ${ bloc.showProductModel!.data.price * quantity}ر٫س",
                                                             style: TextStyle(
                                                                 fontSize: 11.sp,
                                                                 fontWeight:

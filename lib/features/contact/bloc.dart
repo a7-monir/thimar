@@ -1,14 +1,16 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
-import '../../../../../helper/server_gate.dart';
+import 'package:thimar/core/logic/helper_methods.dart';
+
+import '../../core/logic/server_gate.dart';
 part 'events.dart';
 part 'model.dart';
 part 'states.dart';
 
-class ContactBloc extends Bloc<ContactEvents,ContactState>{
+class ContactBloc extends Bloc<ContactEvents,ContactStates>{
 
-  ContactBloc(this.serverGate):super(ContactState()){
-    on<ContactStartEvent>(contact);
+  ContactBloc(this.serverGate):super(ContactStates()){
+    on<ContactStartEvent>(getData);
     on<CreateContactStartEvent>(createContact);
   }
 
@@ -16,24 +18,23 @@ class ContactBloc extends Bloc<ContactEvents,ContactState>{
   final nameController = TextEditingController();
   final titleController = TextEditingController();
   final contentController = TextEditingController();
-  ContactModel? model ;
   final ServerGate serverGate;
 
-  void contact(ContactStartEvent event, Emitter<ContactState>emit) async {
+  void getData(ContactStartEvent event, Emitter<ContactStates>emit) async {
 
     emit(ContactLoadingState());
 
     final response= await serverGate.getFromServer(url: 'contact');
 
     if(response.success){
-      model= ContactModel.fromJson(response.response!.data);
-      emit(ContactSuccessState());
+      final contactModel= ContactData.fromJson(response.response!.data);
+      emit(ContactSuccessState(model:contactModel,));
     }else{
-      emit(ContactFailedState(error: response.msg, errType: response.errType!));
+      emit(ContactFailedState(msg: response.msg, statusCode: response.errType!));
     }
   }
 
-  void createContact(CreateContactStartEvent event, Emitter<ContactState>emit)async{
+  void createContact(CreateContactStartEvent event, Emitter<ContactStates>emit)async{
     emit(CreateContactLoadingState());
 
     final response =await serverGate.sendToServer(
@@ -46,9 +47,9 @@ class ContactBloc extends Bloc<ContactEvents,ContactState>{
       }
     );
     if(response.success){
-      emit(CreateContactSuccessState());
+      emit(CreateContactSuccessState(msg: response.msg));
     }
-    else{emit(CreateContactFailedState(error: response.msg, errType: response.errType!));
+    else{emit(CreateContactFailedState(msg: response.msg, statusCode: response.errType!));
     }
 
 

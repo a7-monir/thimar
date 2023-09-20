@@ -2,19 +2,18 @@ import 'package:easy_localization/easy_localization.dart' as lang;
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kiwi/kiwi.dart';
-import 'package:thimar/constant/app_button.dart';
-import 'package:thimar/constant/app_image.dart';
-import 'package:thimar/constant/app_loading.dart';
-import 'package:thimar/constant/app_logo.dart';
+import 'package:thimar/core/design/res/app_button.dart';
+import 'package:thimar/core/design/res/app_loading.dart';
+import 'package:thimar/core/design/res/app_logo.dart';
 import 'package:thimar/generated/locale_keys.g.dart';
-import 'package:thimar/helper/app_theme.dart';
+import 'package:thimar/core/logic/app_theme.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:thimar/screens/auth/login.dart';
-import '../../constant/app_input.dart';
-import '../../features/city/view.dart';
+import '../../core/design/res/app_input.dart';
+import '../../core/logic/helper_methods.dart';
+import '../../core/logic/toast.dart';
 import '../../features/register/bloc.dart';
-import '../../helper/helper_methods.dart';
-import '../../helper/toast.dart';
+import '../city/view.dart';
 import 'verification.dart';
 
 
@@ -50,7 +49,7 @@ class RegisterView extends StatelessWidget {
                   LocaleKeys.Auth_You_can_log_in_now.tr(),
                   style: TextStyle(
                     fontSize: 16.sp,
-                    color: AppTheme.mainGreyColor,
+                    color: AppTheme.mainColorText,
                   ),
                 ),
                 SizedBox(
@@ -137,7 +136,7 @@ class RegisterView extends StatelessWidget {
                               fromForget: false,
                             ));
                           } else if (state is RegisterFailState) {
-                            Toast.show(state.error, context);
+                            Toast.show(state.msg, context);
                           }
                         },
                         builder: (context, state) {
@@ -150,7 +149,6 @@ class RegisterView extends StatelessWidget {
                                 bloc.unfocus(context);
                                 if (bloc.isDataVaild(context)) {
                                   bloc.add(RegisterStartEvents());
-                                  Toast.show(bloc.model!.message, context);
                                 }
                               },
                               height: 50.h,

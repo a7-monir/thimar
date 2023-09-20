@@ -4,7 +4,13 @@ class CategoriesProductStates {}
 
 class CategoriesProductLoadingState extends CategoriesProductStates {}
 
-class CategoriesProductSuccessState extends CategoriesProductStates {}
+class CategoriesProductSuccessState extends CategoriesProductStates {
+  final CategoryProductData model;
+
+  CategoriesProductSuccessState({
+    required this.model,
+  });
+}
 
 class CategoriesProductFailedState extends CategoriesProductStates {
 

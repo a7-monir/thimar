@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:thimar/core/design/res/colors.dart';
-import 'package:thimar/helper/app_theme.dart';
+import 'package:thimar/core/logic/app_theme.dart';
 
 
 enum btnType{elevated,outLine,cancel,off,dottedBorder}

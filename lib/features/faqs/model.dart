@@ -1,20 +1,20 @@
 part of 'bloc.dart';
 
-class FaqsModel {
-  late final List<Data> list;
+class FaqsData {
+  late final List<FaqsModel> list;
 
 
-  FaqsModel.fromJson(Map<String, dynamic> json){
-    list = List.from(json['data']??[]).map((e)=>Data.fromJson(e)).toList();
+  FaqsData.fromJson(Map<String, dynamic> json){
+    list = List.from(json['data']??[]).map((e)=>FaqsModel.fromJson(e)).toList();
 
   }
 }
 
-class Data {
+class FaqsModel {
   late final int id;
   late final String question, answer;
 
-  Data.fromJson(Map<String, dynamic> json){
+  FaqsModel.fromJson(Map<String, dynamic> json){
     id = json['id']??0;
     question = json['question']??'';
     answer = json['answer']??'';

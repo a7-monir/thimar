@@ -1,36 +1,42 @@
 part of 'bloc.dart';
-class ProductState {}
+class ProductStates {}
 
-class ShowProductLoadingState extends ProductState {}
+class ShowProductLoadingState extends ProductStates {}
 
-class ShowProductSuccessState extends ProductState {
-
+class ShowProductSuccessState extends ProductStates {
+  final ShowProductData model;
+  ShowProductSuccessState({
+    required this.model,
+  });
 }
 
-class ShowProductFailedState extends ProductState {
-  String error;
-  int errType;
+class ShowProductFailedState extends ProductStates {
+  String msg;
+  int statusCode;
   ShowProductFailedState({
-    required this.error,
-    required this.errType,
+    required this.msg,
+    required this.statusCode,
   });
 }
 
 
 
 
-class GetProductRateLoadingState extends ProductState {}
+class GetProductRateLoadingState extends ProductStates {}
 
-class GetProductRateSuccessState extends ProductState {
-
+class GetProductRateSuccessState extends ProductStates {
+  final ProductRateData model;
+  GetProductRateSuccessState({
+    required this.model,
+  });
 }
 
-class GetProductRateFailedState extends ProductState {
-  String error;
-  int errType;
+class GetProductRateFailedState extends ProductStates {
+  String msg;
+  int statusCode;
   GetProductRateFailedState({
-    required this.error,
-    required this.errType,
+    required this.msg,
+    required this.statusCode,
   });
 }
 
@@ -39,30 +45,40 @@ class GetProductRateFailedState extends ProductState {
 
 
 
-class AddToFavoriteLoadingState extends ProductState {}
+class AddToFavoriteLoadingState extends ProductStates {}
 
-class AddToFavoriteSuccessState extends ProductState {}
+class AddToFavoriteSuccessState extends ProductStates {
+  final String msg;
+  AddToFavoriteSuccessState({
+    required this.msg,
+  });
+}
 
-class AddToFavoriteFailedState extends ProductState {
-  String error;
-  int errType;
+class AddToFavoriteFailedState extends ProductStates {
+  String msg;
+  int statusCode;
   AddToFavoriteFailedState({
-    required this.errType,
-    required this.error,
+    required this.statusCode,
+    required this.msg,
   });
 }
 
 
 
-class RemoveFromFavoriteLoadingState extends ProductState {}
+class RemoveFromFavoriteLoadingState extends ProductStates {}
 
-class RemoveFromFavoriteSuccessState extends ProductState {}
+class RemoveFromFavoriteSuccessState extends ProductStates {
+  final String msg;
+  RemoveFromFavoriteSuccessState({
+    required this.msg,
+  });
+}
 
-class RemoveFromFavoriteFailedState extends ProductState {
-  String error;
-  int errType;
+class RemoveFromFavoriteFailedState extends ProductStates {
+  String msg;
+  int statusCode;
   RemoveFromFavoriteFailedState({
-    required this.errType,
-    required this.error,
+    required this.statusCode,
+    required this.msg,
   });
 }

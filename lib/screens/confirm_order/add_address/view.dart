@@ -3,14 +3,14 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:kiwi/kiwi.dart';
-import 'package:thimar/constant/app_button.dart';
-import 'package:thimar/constant/app_failed.dart';
-import 'package:thimar/constant/app_loading.dart';
-import 'package:thimar/helper/helper_methods.dart';
+import 'package:thimar/core/design/res/app_button.dart';
+import 'package:thimar/core/design/res/app_loading.dart';
 import 'package:thimar/screens/add_address.dart';
-import '../../../../constant/app_image.dart';
 import '../../../../features/address/bloc.dart';
-import '../../../../helper/app_theme.dart';
+import '../../../core/logic/app_theme.dart';
+import '../../../core/design/res/app_failed.dart';
+import '../../../core/design/res/app_image.dart';
+import '../../../core/logic/helper_methods.dart';
 
 
 class AddAddress extends StatefulWidget {
@@ -51,14 +51,15 @@ class _AddAddressState extends State<AddAddress> {
                     if(state is GetAddressLoadingState){
                       return AppLoading();
                     }else if (state is GetAddressSuccessState){
+                      var list = state.model.list;
                       return ListView.separated(
                           itemBuilder: (context, index) =>
                               GestureDetector(
                                 onTap: (){
                                   Navigator.pop(context,[
-                                    bloc.model!.list[index].type,
-                                    bloc.model!.list[index].location,
-                                    bloc.model!.list[index].id
+                                    // bloc.model!.data[index].statusCode,
+                                    list[index].location,
+                                    list[index].id
                                   ]);
                                 },
                                 child: Container(
@@ -79,13 +80,13 @@ class _AddAddressState extends State<AddAddress> {
                                         CrossAxisAlignment.start,
                                         children: [
                                           Text(
-                                            bloc.model!.list[index].type,
+                                            list[index].type,
                                             style: TextStyle(
                                                 color: AppTheme.mainColor,
                                                 fontSize: 15.sp,
                                                 fontWeight: FontWeight.bold),
                                           ),
-                                          Text('العنوان: ${bloc.model!.list[index].location}',
+                                          Text('العنوان: ${list[index].location}',
                                             maxLines: 1,
                                             style: TextStyle(
                                               color: AppTheme.mainColor,
@@ -93,14 +94,14 @@ class _AddAddressState extends State<AddAddress> {
                                             ),
                                           ),
                                           Text(
-                                            bloc.model!.list[index].description,
+                                            list[index].description,
                                             style: TextStyle(
                                               color: AppTheme.mainColor,
                                               fontSize: 14.sp,
                                             ),
                                           ),
                                           Text(
-                                            bloc.model!.list[index].phone,
+                                            list[index].phone,
                                             style: TextStyle(
                                               color: AppTheme.mainColor,
                                               fontSize: 14.sp,
@@ -139,9 +140,9 @@ class _AddAddressState extends State<AddAddress> {
                           separatorBuilder: (context, index) => SizedBox(
                             height: 20.h,
                           ),
-                          itemCount: bloc.model!.list.length);
+                          itemCount: list.length);
                     }else if (state is GetAddressFailedState) {
-                      return AppFailed(msg:state.error);
+                      return AppFailed(msg:state.msg);
                     }else{return AppLoading();}
                   },
                 ),

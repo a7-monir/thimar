@@ -1,20 +1,16 @@
 import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:kiwi/kiwi.dart';
-import 'package:thimar/constant/app_image.dart';
-import 'package:thimar/helper/app_theme.dart';
-import 'package:thimar/helper/helper_methods.dart';
-
+import 'package:thimar/core/logic/app_theme.dart';
 import 'package:badges/badges.dart' as badges;
-
-
-import '../../helper/custom_text.dart';
+import '../../core/design/res/app_image.dart';
+import '../../core/logic/custom_text.dart';
+import '../../core/logic/helper_methods.dart';
 import '../cart/view.dart';
 import 'widget/custom_categories.dart';
 import 'widget/custom_get_products.dart';
 import 'widget/custom_slider.dart';
-import 'widget/search.dart';
+import '../search.dart';
 
 
 class HomeView extends StatefulWidget {

@@ -1,10 +1,11 @@
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:thimar/constant/app_button.dart';
-import 'package:thimar/constant/app_image.dart';
-import '../constant/appbar.dart';
-import '../helper/app_theme.dart';
+import 'package:thimar/core/design/res/app_button.dart';
+
+import '../core/design/res/app_image.dart';
+import '../core/design/res/appbar.dart';
+import '../core/logic/app_theme.dart';
 
 class WalletView extends StatelessWidget {
   const WalletView({Key? key}) : super(key: key);
@@ -74,7 +75,7 @@ class WalletView extends StatelessWidget {
                     Text('عرض الكل',
                       style: TextStyle(
                         fontSize: 15.sp,
-                        color: AppTheme.mainGreyColor,
+                        color: AppTheme.mainColorText,
                       ),)
                   ],
                 ),
@@ -111,7 +112,7 @@ class WalletView extends StatelessWidget {
                       const Spacer(),
                       Text('27,يونيو,2021',style: TextStyle(
                         fontSize: 14.sp,
-                        color: AppTheme.mainGreyColor,
+                        color: AppTheme.mainColorText,
                       ),)
                     ],
                   ),
@@ -150,7 +151,7 @@ class WalletView extends StatelessWidget {
                       const Spacer(),
                       Text('27,يونيو,2021',style: TextStyle(
                         fontSize: 14.sp,
-                        color: AppTheme.mainGreyColor,
+                        color: AppTheme.mainColorText,
                       ),)
                     ],
                   ),
@@ -172,7 +173,7 @@ class WalletView extends StatelessWidget {
                     const Spacer(),
                     Text('27,يونيو,2021',style: TextStyle(
                       fontSize: 14.sp,
-                      color: AppTheme.mainGreyColor,
+                      color: AppTheme.mainColorText,
                     ),)
 
                   ],

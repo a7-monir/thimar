@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:kiwi/kiwi.dart';
 
-import '../../../../features/get_cart/bloc.dart';
-import '../../../../helper/app_theme.dart';
+import '../../../core/logic/app_theme.dart';
+import '../../../features/cart/bloc.dart';
 
 
 class ProductItem extends StatefulWidget {

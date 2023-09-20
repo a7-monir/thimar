@@ -1,19 +1,14 @@
-import 'dart:async';
-
-import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:kiwi/kiwi.dart';
-import 'package:thimar/constant/app_button.dart';
-import 'package:thimar/constant/app_failed.dart';
-import 'package:thimar/constant/app_input.dart';
-import 'package:thimar/constant/app_loading.dart';
-import '../constant/appbar.dart';
+import 'package:thimar/core/design/res/app_button.dart';
+import 'package:thimar/core/design/res/app_input.dart';
+import 'package:thimar/core/design/res/app_loading.dart';
+import '../core/design/res/appbar.dart';
 import '../features/address/bloc.dart';
-import '../helper/app_theme.dart';
+import '../core/logic/app_theme.dart';
 import 'package:geocoding/geocoding.dart';
 
 class AddAddressView extends StatefulWidget {

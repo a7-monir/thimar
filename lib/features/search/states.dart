@@ -1,16 +1,21 @@
 part of 'bloc.dart';
-class SearchState{}
+class SearchStates{}
 
-class SearchLoadingState extends SearchState {}
+class SearchLoadingState extends SearchStates {}
 
-class SearchSuccessState extends SearchState {}
+class SearchSuccessState extends SearchStates {
+  final SearchData model;
+  SearchSuccessState({
+    required this.model,
+  });
+}
 
-class SearchFailedState extends SearchState {
-  String error;
-  int errType;
+class SearchFailedState extends SearchStates {
+  String msg;
+  int statusCode;
   SearchFailedState({
-    required this.error,
-    required this.errType,
+    required this.msg,
+    required this.statusCode,
   });
 }
 

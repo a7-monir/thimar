@@ -3,18 +3,18 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:kiwi/kiwi.dart';
-import 'package:thimar/constant/app_button.dart';
-import 'package:thimar/constant/app_image.dart';
-import 'package:thimar/constant/app_input.dart';
-import 'package:thimar/constant/app_loading.dart';
-import 'package:thimar/constant/appbar.dart';
+import 'package:thimar/core/design/res/app_button.dart';
+import 'package:thimar/core/design/res/app_input.dart';
+import 'package:thimar/core/design/res/app_loading.dart';
+import '../core/design/res/app_image.dart';
+import '../core/design/res/appbar.dart';
 import '../features/about_order/bloc.dart';
 import '../features/rate_order/bloc.dart';
-import '../helper/app_theme.dart';
+import '../core/logic/app_theme.dart';
 
 
 class RateOrderView extends StatefulWidget {
-  final ProductData products;
+  final ProductModel products;
   const RateOrderView({Key? key, required this.products}) : super(key: key);
 
   @override

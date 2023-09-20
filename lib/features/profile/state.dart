@@ -1,19 +1,21 @@
 part of 'bloc.dart';
 
-class ProfileState{}
+class ProfileStates{}
 
-class ProfileLoadingState extends ProfileState {}
+class ProfileLoadingState extends ProfileStates {}
 
-class ProfileSuccessState extends ProfileState {
-
-  //late final List<CartModel> list;
+class ProfileSuccessState extends ProfileStates {
+final ProfileData model;
+ProfileSuccessState({
+  required this.model,
+});
 }
 
-class ProfileFailedState extends ProfileState {
-  String error;
-  int errType;
+class ProfileFailedState extends ProfileStates {
+  String msg;
+  int statusCode;
   ProfileFailedState({
-    required this.error,
-    required this.errType,
+    required this.msg,
+    required this.statusCode,
   });
 }

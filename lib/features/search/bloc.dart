@@ -1,18 +1,19 @@
 import 'package:bloc/bloc.dart';
-import '../../helper/server_gate.dart';
+
+import '../../core/logic/server_gate.dart';
 part 'events.dart';
 part 'model.dart';
 part 'states.dart';
 
-class SearchBloc extends Bloc<SearchEvents, SearchState> {
-  SearchBloc(this.serverGate) : super(SearchState()) {
+class SearchBloc extends Bloc<SearchEvents, SearchStates> {
+  SearchBloc(this.serverGate) : super(SearchStates()) {
     on<SearchStartEvent>(Search);
   }
   final ServerGate serverGate;
-  SearchModel? model;
 
 
-  void Search(SearchStartEvent event, Emitter<SearchState> emit) async {
+
+  void Search(SearchStartEvent event, Emitter<SearchStates> emit) async {
     emit(SearchLoadingState());
 
     final response = await serverGate.getFromServer(url: 'search',
@@ -22,11 +23,11 @@ class SearchBloc extends Bloc<SearchEvents, SearchState> {
     });
 
     if (response.success) {
-      model = SearchModel.fromJson(response.response!.data);
-      emit(SearchSuccessState());
+      final searchModel = SearchData.fromJson(response.response!.data);
+      emit(SearchSuccessState(model:searchModel));
     } else {
       emit(SearchFailedState(
-          error: response.msg, errType: response.errType!));
+          msg: response.msg, statusCode: response.errType!));
     }
   }
 

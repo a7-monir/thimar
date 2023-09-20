@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:thimar/constant/app_image.dart';
 
-import '../helper/app_theme.dart';
+import '../../logic/app_theme.dart';
+import 'app_image.dart';
 
 class NotificationsContent extends StatelessWidget {
   final String icon;

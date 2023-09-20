@@ -1,59 +1,77 @@
 part of 'bloc.dart';
 
-class AddressState{}
+class AddressStates{}
 
-class GetAddressLoadingState extends AddressState {}
+class GetAddressLoadingState extends AddressStates {}
 
-class GetAddressSuccessState extends AddressState {}
+class GetAddressSuccessState extends AddressStates {
+  final AddressData model;
+  GetAddressSuccessState({required this.model}){
 
-class GetAddressFailedState extends AddressState {
-  String error;
-  int errType;
+  }
+}
+
+class GetAddressFailedState extends AddressStates {
+  String msg;
+  int statusCode;
   GetAddressFailedState({
-    required this.error,
-    required this.errType,
-  });
+    required this.msg,
+    required this.statusCode,
+  }){showMessage(msg);}
 }
 
 
-class DeleteAddressLoadingState extends AddressState {}
+class DeleteAddressLoadingState extends AddressStates {}
 
-class DeleteAddressSuccessState extends AddressState {}
+class DeleteAddressSuccessState extends AddressStates {
 
-class DeleteAddressFailedState extends AddressState {
-  String error;
-  int errType;
+}
+
+class DeleteAddressFailedState extends AddressStates {
+  String msg;
+  int statusCode;
   DeleteAddressFailedState({
-    required this.error,
-    required this.errType,
+    required this.msg,
+    required this.statusCode,
   });
 }
 
 
 
-class EditAddressLoadingState extends AddressState {}
+class EditAddressLoadingState extends AddressStates {}
 
-class EditAddressSuccessState extends AddressState {}
+class EditAddressSuccessState extends AddressStates {
+  final AddressData model;
+  final String msg;
+  EditAddressSuccessState({required this.msg,required this.model}){
+    showMessage(msg);
+  }
+}
 
-class EditAddressFailedState extends AddressState {
-  String error;
-  int errType;
+class EditAddressFailedState extends AddressStates {
+  String msg;
+  int statusCode;
   EditAddressFailedState({
-    required this.error,
-    required this.errType,
+    required this.msg,
+    required this.statusCode,
   });
 }
 
 
-class AddAddressLoadingState extends AddressState {}
+class AddAddressLoadingState extends AddressStates {}
 
-class AddAddressSuccessState extends AddressState {}
+class AddAddressSuccessState extends AddressStates {
+  final String msg;
+  AddAddressSuccessState({required this.msg,}){
+    showMessage(msg);
+  }
+}
 
-class AddAddressFailedState extends AddressState {
-  String error;
-  int errType;
+class AddAddressFailedState extends AddressStates {
+  String msg;
+  int statusCode;
   AddAddressFailedState({
-    required this.error,
-    required this.errType,
+    required this.msg,
+    required this.statusCode,
   });
 }

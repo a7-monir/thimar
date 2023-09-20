@@ -3,13 +3,18 @@ class ConfirmOrderStates {}
 
 class ConfirmOrderLoadingState extends ConfirmOrderStates {}
 
-class ConfirmOrderSuccessState extends ConfirmOrderStates {}
+class ConfirmOrderSuccessState extends ConfirmOrderStates {
+  final String msg;
+  ConfirmOrderSuccessState({required this.msg}){
+    showMessage(msg);
+  }
+}
 
 class ConfirmOrderFailedState extends ConfirmOrderStates {
-  String error;
-  int errType;
+  String msg;
+  int statusCode;
   ConfirmOrderFailedState({
-    required this.error,
-    required this.errType,
+    required this.msg,
+    required this.statusCode,
   });
 }

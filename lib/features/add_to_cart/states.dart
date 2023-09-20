@@ -4,13 +4,18 @@ class AddToCartState{}
 
 class AddToCartLoadingState extends AddToCartState {}
 
-class AddToCartSuccessState extends AddToCartState {}
+class AddToCartSuccessState extends AddToCartState {
+  final String msg;
+  AddToCartSuccessState({required this.msg}){
+    showMessage(msg);
+  }
+}
 
 class AddToCartFailedState extends AddToCartState {
-  String error;
+  String msg;
   int type;
   AddToCartFailedState({
-    required this.error,
+    required this.msg,
     required this.type,
   });
 }

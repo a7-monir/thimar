@@ -2,29 +2,32 @@ import 'dart:io';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:thimar/helper/cache_helper.dart';
 
-import '../../../../helper/server_gate.dart';
+import '../../core/logic/cache_helper.dart';
+import '../../core/logic/helper_methods.dart';
+import '../../core/logic/server_gate.dart';
+import '../../core/logic/toast.dart';
+
 part 'events.dart';
 part 'model.dart';
 part 'states.dart';
 
-class LoginBloc extends Bloc<LoginEvents, LoginState> {
-  LoginBloc(this.serverGate) : super(LoginState()) {
+class LoginBloc extends Bloc<LoginEvents, LoginStates> {
+  LoginBloc(this.serverGate) : super(LoginStates()) {
     on<LoginStartEvents>(Login);
   }
 
   final formKey = GlobalKey<FormState>();
   final phoneController = TextEditingController();
   final passwordController = TextEditingController();
-  LoginModel? model;
+
 
   final ServerGate serverGate;
 
-  void Login(LoginStartEvents event, Emitter<LoginState> emit) async {
+  void Login(LoginStartEvents event, Emitter<LoginStates> emit) async {
     emit(LoginLoadingState());
 
-    final deviceToken = await FirebaseMessaging.instance.getToken() ?? "MOONir";
+    final deviceToken = await FirebaseMessaging.instance.getToken() ;
     print('+++++++++++++++++++++++++++++++++++++++++++');
     debugPrint(deviceToken);
 
@@ -36,25 +39,25 @@ class LoginBloc extends Bloc<LoginEvents, LoginState> {
       'user_type': 'client',
     });
     if (response.success) {
-      model = LoginModel.fromJson(response.response!.data);
+      final loginModel = LoginData.fromJson(response.response!.data);
       print(response.response!.data);
-      CacheHelper.setUserId(model!.data.id);
-      CacheHelper.setFullName(model!.data.fullname);
-      CacheHelper.setPhone(model!.data.phone);
-      CacheHelper.setEmail(model!.data.email);
-      CacheHelper.setImage(model!.data.image);
-      CacheHelper.setUnreadNotifications(model!.data.unreadNotifications);
-      CacheHelper.setUserType(model!.data.userType);
-      CacheHelper.setUserToken(model!.data.token);
-      CacheHelper.setCityName(model!.data.city.name ?? "");
-      CacheHelper.setCityId(model!.data.city.id ?? "");
-      CacheHelper.setUserCartCount(model!.data.userCartCount);
-      CacheHelper.setDeviceToken(deviceToken);
+      CacheHelper.setUserId(loginModel.data.id);
+      CacheHelper.setFullName(loginModel.data.fullname);
+      CacheHelper.setPhone(loginModel.data.phone);
+      CacheHelper.setEmail(loginModel.data.email);
+      CacheHelper.setImage(loginModel.data.image);
+      CacheHelper.setUnreadNotifications(loginModel.data.unreadNotifications);
+      CacheHelper.setUserType(loginModel.data.userType);
+      CacheHelper.setUserToken(loginModel.data.token);
+      CacheHelper.setCityName(loginModel.data.city.name ?? "");
+      CacheHelper.setCityId(loginModel.data.city.id ?? "");
+      CacheHelper.setUserCartCount(loginModel.data.userCartCount);
+      CacheHelper.setDeviceToken(deviceToken!);
 
       CacheHelper.setUserType('client');
-      emit(LoginSuccessState());
+      emit(LoginSuccessState(msg: response.msg, model: loginModel));
     } else {
-      emit(LoginFailState(type: response.statusCode, error: response.msg));
+      emit(LoginFailState(statusCode: response.statusCode, msg: response.msg));
     }
   }
 }

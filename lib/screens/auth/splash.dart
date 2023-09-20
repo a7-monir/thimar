@@ -4,13 +4,13 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:thimar/constant/app_image.dart';
-import 'package:thimar/helper/helper_methods.dart';
 import 'package:thimar/screens/auth/login.dart';
 
 
-import '../../../helper/cache_helper.dart';
-import '../../main/view.dart';
+import '../../core/design/res/app_image.dart';
+import '../../core/logic/cache_helper.dart';
+import '../../core/logic/helper_methods.dart';
+import '../main/view.dart';
 
 
 class SplashView extends StatefulWidget {
@@ -95,11 +95,8 @@ class _SplashViewState extends State<SplashView> {
               bottom: -60,
               right: -130,
               // alignment: Alignment.bottomRight,
-              child: Image.asset(
-                'assets/icons/top-view-assortment-vegetables-paper-bag.png',
-                width: 400.w,
-                fit: BoxFit.cover,
-              ),
+              child: AppImage( 'assets/icons/top-view-assortment-vegetables-paper-bag.png',w: 400.w, fit: BoxFit.cover),
+
             ),
           ],
         ),

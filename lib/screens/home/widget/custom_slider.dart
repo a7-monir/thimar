@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:kiwi/kiwi.dart';
-import 'package:thimar/constant/app_loading.dart';
+import 'package:thimar/core/design/res/app_loading.dart';
 
 import '../../../../features/slider/bloc.dart';
 
@@ -27,17 +27,18 @@ class _SliderAppState extends State<SliderApp> {
           if(state is SliderLoadingState){
             return AppLoading();
           }else if(state is SliderSuccessState) {
+            var list = state.model.list;
             return Swiper(
               itemBuilder: (context, index) {
                 return Image.network(
-                    bloc.sliderModel!.list[index].media,
+                    list[index].media,
                   fit: BoxFit.cover,
                   width: MediaQuery.of(context).size.width.w,
                   height: MediaQuery.of(context).size.height.h,
                 );
               },
               autoplay: true,
-              itemCount: bloc.sliderModel!.list.length,
+              itemCount:list.length,
               scrollDirection: Axis.horizontal,
               pagination: SwiperPagination(
                 alignment: Alignment.bottomCenter,
@@ -52,7 +53,7 @@ class _SliderAppState extends State<SliderApp> {
                );
           } else if(state is SliderFailedState){
             return Center(
-              child: Text(state.error),
+              child: Text(state.msg),
             );
           }else {
             return AppLoading();

@@ -1,34 +1,37 @@
 
 import 'package:bloc/bloc.dart';
-import '../../../../../helper/server_gate.dart';
-part 'event.dart';
+
+import '../../core/logic/helper_methods.dart';
+import '../../core/logic/server_gate.dart';
+part 'events.dart';
 part 'model.dart';
-part 'state.dart';
+part 'states.dart';
 
 class AboutOrderBloc extends Bloc<AboutOrderEvent,AboutOrderState>{
 
   AboutOrderBloc(this.serverGate) : super(AboutOrderState()) {
 
-    on<AboutOrderStartEvent>(getOrderDetails);
+    on<AboutOrderStartEvent>(getData);
     on<CancelOrderStartEvent>(cancelOrder);
-    // on<FinishedOrderStartEvent>(getFinishedOrder);
 
 
   }
 
   final ServerGate serverGate;
-  AboutOrderModel? model;
+  AboutOrderData?aboutOrderModel;
 
-  void getOrderDetails(AboutOrderStartEvent event, Emitter<AboutOrderState>emit )async{
+
+  void getData(AboutOrderStartEvent event, Emitter<AboutOrderState>emit )async{
     emit(AboutOrderLoadingState());
     final response = await serverGate.getFromServer(url: 'client/orders/${event.id}');
 
     if(response.success){
 
-      model = AboutOrderModel.fromJson(response.response!.data);
-      emit(AboutOrderSuccessState());
+      final aboutOrderModel = AboutOrderData.fromJson(response.response!.data);
+
+      emit(AboutOrderSuccessState(model:aboutOrderModel,));
     }else{
-      emit(AboutOrderFailedState(errType: response.errType!, error: response.msg));
+      emit(AboutOrderFailedState(statusCode: response.errType!, msg: response.msg));
     }
 
 
@@ -45,7 +48,7 @@ class AboutOrderBloc extends Bloc<AboutOrderEvent,AboutOrderState>{
 
       emit(CancelOrderSuccessState());
     }else{
-      emit(CancelOrderFailedState(errType: response.errType!, error: response.msg));}
+      emit(CancelOrderFailedState(statusCode: response.errType!, msg: response.msg));}
 
   }
 

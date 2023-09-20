@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:thimar/constant/app_button.dart';
-import 'package:thimar/constant/app_image.dart';
-import 'package:thimar/helper/app_theme.dart';
-import 'package:thimar/helper/helper_methods.dart';
+import 'package:thimar/core/design/res/app_button.dart';
+import 'package:thimar/core/logic/app_theme.dart';
 import 'package:thimar/screens/my_order.dart';
 
+import '../../../core/design/res/app_image.dart';
+import '../../../core/logic/helper_methods.dart';
 import '../../main/view.dart';
 
 
@@ -31,7 +31,7 @@ class FinishOrderView extends StatelessWidget {
                 Text('يمكنك متابعة حالة الطلب او الرجوع للرئسيية',
                 style: TextStyle(
                   fontSize: 17.sp,
-                  color: AppTheme.mainGreyColor
+                  color: AppTheme.mainColorText
                 ),),
                 SizedBox(height: 20.h,),
                 Row(

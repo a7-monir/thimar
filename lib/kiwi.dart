@@ -1,8 +1,10 @@
 import 'package:kiwi/kiwi.dart';
+import 'core/logic/server_gate.dart';
 import 'features/about_order/bloc.dart';
 import 'features/about_us/bloc.dart';
 import 'features/add_to_cart/bloc.dart';
 import 'features/address/bloc.dart';
+import 'features/cart/bloc.dart';
 import 'features/categories/bloc.dart';
 import 'features/change_password/bloc.dart';
 import 'features/confirm_order/bloc.dart';
@@ -11,12 +13,11 @@ import 'features/edit_password/bloc.dart';
 import 'features/faqs/bloc.dart';
 import 'features/favorites/bloc.dart';
 import 'features/forget_password/bloc.dart';
-import 'features/get_cart/bloc.dart';
-import 'features/get_notifications/bloc.dart';
 import 'features/get_products/bloc.dart';
 import 'features/login/bloc.dart';
 import 'features/logout_bloc/bloc.dart';
 import 'features/my_order/bloc.dart';
+import 'features/notifications/bloc.dart';
 import 'features/policy/bloc.dart';
 import 'features/profile/bloc.dart';
 import 'features/rate_order/bloc.dart';
@@ -26,7 +27,6 @@ import 'features/sections/bloc.dart';
 import 'features/show_product/bloc.dart';
 import 'features/slider/bloc.dart';
 import 'features/verification/bloc.dart';
-import 'helper/server_gate.dart';
 
 
 

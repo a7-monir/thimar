@@ -1,5 +1,5 @@
 part of 'bloc.dart';
-class GetProductsEvent{}
+class GetProductsEvents{}
 
-class GetProductsStartEvent extends GetProductsEvent {}
+class GetProductsStartEvent extends GetProductsEvents {}
 

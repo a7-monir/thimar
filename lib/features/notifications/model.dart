@@ -1,18 +1,18 @@
 part of 'bloc.dart';
-class NotificationModel {
-  late final Data list;
+class NotificationData {
+  late final NotificationModel data;
 
-  NotificationModel.fromJson(Map<String, dynamic> json){
-    list = Data.fromJson(json['data']??{});
+  NotificationData.fromJson(Map<String, dynamic> json){
+    data = NotificationModel.fromJson(json['data']??{});
   }
 
 }
 
-class Data {
+class NotificationModel {
   late final int unreadnotificationsCount;
   late final List<Notifications> list;
 
-  Data.fromJson(Map<String, dynamic> json){
+  NotificationModel.fromJson(Map<String, dynamic> json){
     unreadnotificationsCount = json['unreadnotifications_count']??0;
     list = List.from(json['notifications']??[]).map((e)=>Notifications.fromJson(e)).toList();
   }

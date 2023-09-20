@@ -3,12 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:kiwi/kiwi.dart';
-import 'package:thimar/constant/app_failed.dart';
-import 'package:thimar/constant/app_loading.dart';
+import 'package:thimar/core/design/res/app_loading.dart';
 import '../../../../generated/locale_keys.g.dart';
-import '../../../../helper/app_theme.dart';
-import '../login/bloc.dart';
-import '../register/bloc.dart';
+import '../../core/logic/app_theme.dart';
+import '../../core/design/res/app_failed.dart';
+import '../../features/login/bloc.dart';
+import '../../features/register/bloc.dart';
+
 
 
 class ChooseCityDialog extends StatefulWidget {
@@ -90,7 +91,7 @@ class _ChooseCityDialogState extends State<ChooseCityDialog> {
                   );
                 } else if(state is RegisterGetCitiesFailState){
                   return
-                  AppFailed(msg: state.error);
+                  AppFailed(msg: state.msg);
 
                 }else {
                   return const Text("Check states");}

@@ -1,20 +1,20 @@
 part of 'bloc.dart';
-class GetProductsModel {
-  late List<Data> list;
+class ProductsData {
+  late List<ProductsModel> list;
   late int userCartCount;
   late double maxPrice,minPrice;
 
-   GetProductsModel.fromJson(Map<String, dynamic> json)
+   ProductsData.fromJson(Map<String, dynamic> json)
    {
-     list= List<Data>.from(json["data"].map((x) => Data.fromJson(x)));
+     list= List<ProductsModel>.from(json["data"].map((x) => ProductsModel.fromJson(x)));
    userCartCount= json["user_cart_count"]??0;
-   maxPrice= json["max_price"]?? 0.0 .toDouble();
-   minPrice= json["min_price"]?? 0.0.toDouble();
+   maxPrice= json["max_price"]?? 0 .toDouble();
+   minPrice= json["min_price"]?? 0.toDouble();
    }
 
 
 }
-class Data {
+class ProductsModel {
 
   late int categoryId, id,priceBeforeDiscount,amount;
   late String title, description, code,mainImage;
@@ -24,7 +24,7 @@ class Data {
   late List<Image> images;
   late DateTime createdAt;
 
-  Data.fromJson(Map<String, dynamic> json)
+  ProductsModel.fromJson(Map<String, dynamic> json)
   {
     categoryId= json["category_id"]?? 0 ;
     id= json["id"] ?? 0 ;

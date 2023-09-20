@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:thimar/helper/app_theme.dart';
+import 'package:thimar/core/logic/app_theme.dart';
 import 'package:thimar/screens/favorites.dart';
 import 'package:thimar/screens/my_account.dart';
 import 'package:thimar/screens/my_order.dart';

@@ -1,18 +1,19 @@
 part of 'bloc.dart';
-class GetProductsState{}
+class ProductsStates{}
 
 
-class GetProductsLoadingState extends GetProductsState {}
+class GetProductsLoadingState extends ProductsStates {}
 
-class GetProductsSuccessState extends GetProductsState {
-
+class GetProductsSuccessState extends ProductsStates {
+  final ProductsData model;
+  GetProductsSuccessState({required this.model});
 }
 
-class GetProductsFailedState extends GetProductsState {
-  String error;
-  int errType;
+class GetProductsFailedState extends ProductsStates {
+  String msg;
+  int statusCode;
   GetProductsFailedState({
-    required this.errType,
-    required this.error,
+    required this.statusCode,
+    required this.msg,
   });
 }

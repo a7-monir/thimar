@@ -1,21 +1,21 @@
 part of 'bloc.dart';
-class CategoriesModel{
-  late List<Data> list;
+class CategoriesData{
+  late List<CategoriesModel> list;
 
-   CategoriesModel.fromJson(Map<String, dynamic> json) {
-     list= List<Data>.from(json["data"].map((x) => Data.fromJson(x)));
+   CategoriesData.fromJson(Map<String, dynamic> json) {
+     list= List<CategoriesModel>.from(json["data"].map((x) => CategoriesModel.fromJson(x)));
 
 
    }
 
 }
 
-class Data {
+class CategoriesModel {
 
   late int id;
   late String name, description, media;
 
-   Data.fromJson(Map<String, dynamic> json) {
+   CategoriesModel.fromJson(Map<String, dynamic> json) {
      id= json["id"]??0;
      name= json["name"]??'';
      description= json["description"]??'';

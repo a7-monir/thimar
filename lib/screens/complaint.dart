@@ -3,9 +3,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:kiwi/kiwi.dart';
 
-import '../constant/app_button.dart';
-import '../constant/app_input.dart';
-import '../constant/appbar.dart';
+import '../core/design/res/app_button.dart';
+import '../core/design/res/app_input.dart';
+import '../core/design/res/appbar.dart';
 import '../features/contact/bloc.dart';
 
 class ComplaintView extends StatefulWidget {

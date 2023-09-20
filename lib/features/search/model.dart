@@ -1,19 +1,19 @@
 part of 'bloc.dart';
-class SearchModel {
+class SearchData {
 
-  late final Data list;
+  late final SearchModel data;
 
-  SearchModel.fromJson(Map<String, dynamic> json){
-    list = Data.fromJson(json['data']??{});
+  SearchData.fromJson(Map<String, dynamic> json){
+    data = SearchModel.fromJson(json['data']??{});
   }
 }
 
-class Data {
+class SearchModel {
 
-  late final List<SearchResult> searchResult;
+  late final List<SearchResult> list;
 
-  Data.fromJson(Map<String, dynamic> json){
-    searchResult = List.from(json['search_result']??[]).map((e)=>SearchResult.fromJson(e)).toList();
+  SearchModel.fromJson(Map<String, dynamic> json){
+    list = List.from(json['search_result']??[]).map((e)=>SearchResult.fromJson(e)).toList();
   }
 }
 

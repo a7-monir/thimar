@@ -1,16 +1,21 @@
 part of 'bloc.dart';
 
-class FaqsState{}
+class FaqsStates{}
 
-class FaqsLoadingState extends FaqsState {}
+class FaqsLoadingState extends FaqsStates {}
 
-class FaqsSuccessState extends FaqsState {}
+class FaqsSuccessState extends FaqsStates {
+  final FaqsData model;
+  FaqsSuccessState({required this.model}){
 
-class FaqsFailedState extends FaqsState {
-  String error;
-  int errType;
+  }
+}
+
+class FaqsFailedState extends FaqsStates {
+  String msg;
+  int statusCode;
   FaqsFailedState({
-    required this.error,
-    required this.errType,
+    required this.msg,
+    required this.statusCode,
   });
 }

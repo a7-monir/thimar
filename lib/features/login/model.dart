@@ -1,15 +1,15 @@
 part of 'bloc.dart';
-class LoginModel{
+class LoginData{
   late String message,status;
- late Data data;
+ late LoginModel data;
 
-  LoginModel.fromJson(Map<String,dynamic> json){
-    data = Data.fromJson(json["data"] ?? '');
+  LoginData.fromJson(Map<String,dynamic> json){
+    data = LoginModel.fromJson(json["data"] ?? '');
     message =json['message'??''];
     status =json['status'??''];
   }
 }
-class Data {
+class LoginModel {
   late String fullname, phone, email, image,userType,token;
   late int id, isBan,unreadNotifications,userCartCount;
   late bool isActive;
@@ -17,7 +17,7 @@ class Data {
   late City city;
   late dynamic identityNumber;
 
-   Data.fromJson(Map<String,dynamic> json){
+   LoginModel.fromJson(Map<String,dynamic> json){
     id= json['id'] ??0 ;
     fullname=json['fullname']??'';
     phone= json['phone'] ??'' ;

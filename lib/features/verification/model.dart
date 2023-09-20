@@ -1,13 +1,13 @@
 part of 'bloc.dart';
-class VerificationModel{
-  late Data data;
+class VerificationData{
+  late VerificationModel data;
 
-  VerificationModel.fromJson(Map<String,dynamic>json)
-      {data= Data.fromJson(json["data"]);}
+  VerificationData.fromJson(Map<String,dynamic>json)
+      {data= VerificationModel.fromJson(json["data"]);}
      
 }
 
-class Data {
+class VerificationModel {
   late int id,unreadNotifications,userCartCount;
   late String fullname,phone, email, image,userType,token;
   late bool isBan, isActive;
@@ -16,7 +16,7 @@ class Data {
   late dynamic identityNumber;
 
 
-   Data.fromJson(Map<String, dynamic> json)
+   VerificationModel.fromJson(Map<String, dynamic> json)
   {
     id= json["id"]??0;
     fullname= json["fullname"]??'';

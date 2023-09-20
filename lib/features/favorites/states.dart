@@ -1,16 +1,20 @@
 part of 'bloc.dart';
-class FavoritesState{}
+class FavoritesStates{}
 
 
-class FavoritesLoadingState extends FavoritesState {}
+class FavoritesLoadingState extends FavoritesStates {}
 
-class FavoritesSuccessState extends FavoritesState {}
+class FavoritesSuccessState extends FavoritesStates {
+  final FavoritesData model;
 
-class FavoritesFailedState extends FavoritesState {
-  String error;
-  int errType;
+  FavoritesSuccessState({required this.model,}){}
+}
+
+class FavoritesFailedState extends FavoritesStates {
+  String msg;
+  int statusCode;
   FavoritesFailedState({
-    required this.errType,
-    required this.error,
+    required this.statusCode,
+    required this.msg,
   });
 }

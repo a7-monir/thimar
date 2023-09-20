@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:thimar/constant/app_image.dart';
+
+import 'app_image.dart';
+
 
 class AppVisa extends StatelessWidget {
  final Color color;

@@ -3,11 +3,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:kiwi/kiwi.dart';
-import 'package:thimar/constant/app_logo.dart';
-
-import '../constant/app_failed.dart';
-import '../constant/app_loading.dart';
-import '../constant/appbar.dart';
+import 'package:thimar/core/design/res/app_logo.dart';
+import '../core/design/res/app_failed.dart';
+import '../core/design/res/app_loading.dart';
+import '../core/design/res/appbar.dart';
 import '../features/about_us/bloc.dart';
 
 
@@ -39,7 +38,7 @@ class _AboutUsViewState extends State<AboutUsView> {
             return Column(
               children: [
                 AppLogo(),
-                Html(data: bloc.model!.list.about,)
+                Html(data: state.model.model.about,)
               ],
             );
           }else if(state is AboutFailedState){

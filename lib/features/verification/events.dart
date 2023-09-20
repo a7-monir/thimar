@@ -4,14 +4,11 @@ class VerificationEvents{}
 class VerificationStartEvents extends VerificationEvents{
   String phone;
   dynamic code;
-  // String type;
-  // dynamic deviceToken;
 
   VerificationStartEvents({
     required this.phone,
     required this.code,
-    // required this.type,
-    // required this.deviceToken,
+
   });
 
 }

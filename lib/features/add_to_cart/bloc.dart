@@ -1,9 +1,10 @@
 
 
 import 'package:bloc/bloc.dart';
-import '../../helper/server_gate.dart';
+import 'package:thimar/core/logic/helper_methods.dart';
+
+import '../../core/logic/server_gate.dart';
 part 'events.dart';
-part 'model.dart';
 part 'states.dart';
 
 class AddToCartBloc extends Bloc<AddToCartEvents,AddToCartState>{
@@ -13,7 +14,7 @@ class AddToCartBloc extends Bloc<AddToCartEvents,AddToCartState>{
   }
   final ServerGate serverGate;
 
-  AddToCartModel? addToCartModelCartModel;
+  // AddToCartModel? addToCartModelCartModel;
    int? productId ;
 
   void AddToCart(AddToCartStartEvent event, Emitter<AddToCartState> emit) async {
@@ -28,12 +29,12 @@ class AddToCartBloc extends Bloc<AddToCartEvents,AddToCartState>{
 
     if(response.success){
       // addToCartModel= AddToCartModel.fromJson(response.response!.data);
-      emit(AddToCartSuccessState());
+      emit(AddToCartSuccessState(msg: response.msg));
 
     }else(
         emit(
             AddToCartFailedState(
-                type:response.errType!, error: response.msg) )
+                type:response.errType!, msg: response.msg) )
     );
 
   }

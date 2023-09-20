@@ -1,16 +1,21 @@
 part of 'bloc.dart';
-class SliderState{}
+class SliderStates{}
 
-class SliderLoadingState extends SliderState {}
+class SliderLoadingState extends SliderStates {}
 
-class SliderSuccessState extends SliderState {}
+class SliderSuccessState extends SliderStates {
+  final SliderData model;
+  SliderSuccessState({
+    required this.model,
+  });
+}
 
-class SliderFailedState extends SliderState {
-  String error;
-  int errType;
+class SliderFailedState extends SliderStates {
+  String msg;
+  int statusCode;
   SliderFailedState({
-    required this.error,
-    required this.errType,
+    required this.msg,
+    required this.statusCode,
   });
 }
 

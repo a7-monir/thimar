@@ -1,30 +1,31 @@
 
 import 'package:bloc/bloc.dart';
-import '../../../../helper/server_gate.dart';
+import 'package:thimar/core/logic/helper_methods.dart';
+
+import '../../core/logic/server_gate.dart';
 part 'event.dart';
 part 'model.dart';
 part 'state.dart';
 
-class OrderBloc extends Bloc<OrderEvent,OrderState>{
+class OrderBloc extends Bloc<OrderEvent,OrderStates>{
 
-  OrderBloc(this.serverGate) : super(OrderState()) {
-    on<ClientOrderStartEvent>(getClientOrder);
+  OrderBloc(this.serverGate) : super(OrderStates()) {
+    on<ClientOrderStartEvent>(getData);
   }
 
   final ServerGate serverGate;
-  OrderModel? model;
 
-  void getClientOrder(ClientOrderStartEvent event, Emitter<OrderState>emit )async {
+  void getData(ClientOrderStartEvent event, Emitter<OrderStates>emit )async {
     emit(ClientOrderLoadingState());
     final response = await serverGate.getFromServer(
         url: 'client/orders/${event.endPoint}');
 
     if (response.success) {
-      model = OrderModel.fromJson(response.response!.data);
-      emit(ClientOrderSuccessState());
+      final orderModel = OrderData.fromJson(response.response!.data);
+      emit(ClientOrderSuccessState(model:orderModel));
     } else {
       emit(ClientOrderFailedState(
-          errType: response.errType!, error: response.msg));
+          statusCode: response.errType!, msg: response.msg));
     }
   }
 

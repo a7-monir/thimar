@@ -3,13 +3,16 @@ class CategoriesState{}
 
 class CategoriesLoadingState extends CategoriesState {}
 
-class CategoriesSuccessState extends CategoriesState {}
+class CategoriesSuccessState extends CategoriesState {
+  final CategoriesData model;
+  CategoriesSuccessState({required this.model});
+}
 
 class CategoriesFailedState extends CategoriesState {
-  String error;
-  int errType;
+  String msg;
+  int statusCode;
   CategoriesFailedState({
-    required this.error,
-    required this.errType,
+    required this.msg,
+    required this.statusCode,
   });
 }

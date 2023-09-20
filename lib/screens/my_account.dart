@@ -2,18 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:kiwi/kiwi.dart';
-import 'package:thimar/constant/app_image.dart';
-import 'package:thimar/constant/app_info.dart';
-import 'package:thimar/constant/app_loading.dart';
-import 'package:thimar/helper/app_theme.dart';
-import 'package:thimar/helper/cache_helper.dart';
-import 'package:thimar/helper/helper_methods.dart';
-import 'package:thimar/helper/toast.dart';
+import 'package:thimar/core/design/res/app_info.dart';
+import 'package:thimar/core/design/res/app_loading.dart';
+import 'package:thimar/core/logic/app_theme.dart';
+
 import 'package:thimar/screens/complaint.dart';
 import 'package:thimar/screens/policy.dart';
 import 'package:thimar/screens/wallet.dart';
+import '../core/design/res/app_image.dart';
+import '../core/logic/cache_helper.dart';
+import '../core/logic/helper_methods.dart';
+import '../core/logic/toast.dart';
 import '../features/logout_bloc/bloc.dart';
-import 'auth/splash/view.dart';
+import 'auth/splash.dart';
 import 'about_us.dart';
 import 'address.dart';
 
@@ -202,7 +203,7 @@ class _MyAccountViewState extends State<MyAccountView> {
                             Toast.show('تم تسجيل الخروج بنجاح', context);
                             navigateTo(SplashView());
                           }else if(state is LogoutFailState) {
-                            Toast.show(state.error, context);
+                            Toast.show(state.msg, context);
                           }
                         },
                         builder: (context, state) {

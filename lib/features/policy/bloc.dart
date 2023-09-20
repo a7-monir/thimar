@@ -1,29 +1,29 @@
 import 'package:bloc/bloc.dart';
-import '../../../../../helper/server_gate.dart';
+
+import '../../core/logic/server_gate.dart';
 part 'events.dart';
 part 'model.dart';
 part 'states.dart';
 
-class PolicyBloc extends Bloc<PolicyEvents,PolicyState>{
+class PolicyBloc extends Bloc<PolicyEvents,PolicyStates>{
 
-  PolicyBloc(this.serverGate):super(PolicyState()){
-    on<PolicyStartEvent>(policy);
+  PolicyBloc(this.serverGate):super(PolicyStates()){
+    on<PolicyStartEvent>(getData);
   }
 
-  PolicyModel? model ;
   final ServerGate serverGate;
 
-  void policy(PolicyStartEvent event, Emitter<PolicyState>emit) async {
+  void getData(PolicyStartEvent event, Emitter<PolicyStates>emit) async {
 
     emit(PolicyLoadingState());
 
     final response= await serverGate.getFromServer(url: 'policy');
 
     if(response.success){
-      model= PolicyModel.fromJson(response.response!.data);
-      emit(PolicySuccessState());
+      final policyModel= PolicyData.fromJson(response.response!.data);
+      emit(PolicySuccessState(model:policyModel));
     }else{
-      emit(PolicyFailedState(error: response.msg, errType: response.errType!));
+      emit(PolicyFailedState(msg: response.msg, statusCode: response.errType!));
     }
   }
 }

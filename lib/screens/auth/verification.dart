@@ -4,17 +4,17 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:kiwi/kiwi.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
-import 'package:thimar/constant/app_button.dart';
+import 'package:thimar/core/design/res/app_button.dart';
 import 'package:circular_countdown_timer/circular_countdown_timer.dart';
-import 'package:thimar/constant/app_logo.dart';
-import 'package:thimar/helper/helper_methods.dart';
-import 'package:thimar/helper/toast.dart';
+import 'package:thimar/core/design/res/app_logo.dart';
 import 'package:thimar/screens/auth/change_password.dart';
 import 'package:thimar/screens/auth/login.dart';
 
+import '../../core/logic/helper_methods.dart';
+import '../../core/logic/toast.dart';
 import '../../features/verification/bloc.dart';
 import '../../generated/locale_keys.g.dart';
-import '../../helper/app_theme.dart';
+import '../../core/logic/app_theme.dart';
 import '../main/view.dart';
 
 
@@ -63,7 +63,7 @@ class _VerificationViewState extends State<VerificationView> {
                   '${LocaleKeys.Auth_Enter_the_component_code.tr()+bloc.phone}',
                   style: TextStyle(
                     fontSize: 16.sp,
-                    color: AppTheme.mainGreyColor,
+                    color: AppTheme.mainColorText,
                   ),
                   overflow: TextOverflow.fade,
                   maxLines: 2,
@@ -131,10 +131,10 @@ class _VerificationViewState extends State<VerificationView> {
                   fieldHeight: 50,
                   fieldWidth: 55,
                   activeFillColor: Colors.white,
-                  inactiveColor: Colors.white,
-                  activeColor: Colors.white,
+                  inactiveColor: AppTheme.mainColorText,
+                  activeColor: AppTheme.mainColor,
                   disabledColor: Colors.white,
-                  borderWidth: .6,
+                  borderWidth: 0.9,
                   selectedFillColor: Colors.white,
                   inactiveFillColor: Colors.white,
                 ),
@@ -151,7 +151,7 @@ class _VerificationViewState extends State<VerificationView> {
 
 
                       } else if (state is VerificationFailedState) {
-                        Toast.show(state.error, context);
+                        Toast.show(state.msg, context);
                       }
                     } else if (state is CheckCodeSuccessState) {
                       if (widget.fromForget==true){
@@ -163,7 +163,7 @@ class _VerificationViewState extends State<VerificationView> {
                         }
 
                     } else if (state is CheckCodeFailedState) {
-                      Toast.show(state.error, context);
+                      Toast.show(state.msg, context);
                     }
                   },
                   builder: (context, state) {
@@ -199,7 +199,7 @@ class _VerificationViewState extends State<VerificationView> {
                     LocaleKeys.Auth_Did_you_not_receive_the_code.tr(),
                     style: TextStyle(
                       fontSize: 18.sp,
-                      color: AppTheme.mainGreyColor,
+                      color: AppTheme.mainColorText,
                     ),
                   ),
                 ),
@@ -208,7 +208,7 @@ class _VerificationViewState extends State<VerificationView> {
                     LocaleKeys.Auth_You_can_resend_code_after.tr(),
                     style: TextStyle(
                       fontSize: 18.sp,
-                      color: AppTheme.mainGreyColor,
+                      color: AppTheme.mainColorText,
                     ),
                   ),
                 ),
@@ -222,7 +222,7 @@ class _VerificationViewState extends State<VerificationView> {
                       bloc.counterController.restart();
 
                     }else if (state is ResendCodeFailedState){
-                      Toast.show(state.error, context);
+                      Toast.show(state.msg, context);
                     }
                   },
                   builder: (context, state) {
@@ -297,7 +297,9 @@ class _VerificationViewState extends State<VerificationView> {
                     ;
                   },
                 ),
-
+                SizedBox(
+                  height: 20.h,
+                ),
 
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -305,7 +307,7 @@ class _VerificationViewState extends State<VerificationView> {
                     Text(
                       LocaleKeys.Auth_Already_have_an_account.tr(),
                       style: TextStyle(
-                        color: AppTheme.mainGreyColor,
+                        color: AppTheme.mainColor,
                         fontSize: 16.sp,
                       ),
                     ),

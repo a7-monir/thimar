@@ -1,15 +1,20 @@
 part of 'bloc.dart';
-class LogoutState{}
+class LogoutStates{}
 
-class LogoutLoadingState extends LogoutState{}
+class LogoutLoadingState extends LogoutStates{}
 
-class LogoutSuccessState extends LogoutState{}
+class LogoutSuccessState extends LogoutStates{
+  String msg;
+  LogoutSuccessState({
+    required this.msg,
+  }){showMessage(msg);}
+}
 
-class LogoutFailState extends LogoutState{
-  int type;
-  String error;
+class LogoutFailState extends LogoutStates{
+  int statusCode;
+  String msg;
   LogoutFailState({
-    required this.type,
-    required this.error,
+    required this.statusCode,
+    required this.msg,
   });
 }

@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:kiwi/kiwi.dart';
-import 'package:thimar/constant/app_failed.dart';
-import 'package:thimar/constant/app_image.dart';
-import 'package:thimar/constant/app_loading.dart';
-import '../constant/appbar.dart';
+import 'package:thimar/core/design/res/app_loading.dart';
+import '../core/design/res/app_failed.dart';
+import '../core/design/res/app_image.dart';
+import '../core/design/res/appbar.dart';
+import '../core/logic/helper_methods.dart';
 import '../features/favorites/bloc.dart';
-import '../helper/app_theme.dart';
-import '../helper/helper_methods.dart';
+import '../core/logic/app_theme.dart';
 import 'show_product.dart';
 
 
@@ -38,6 +38,7 @@ class _FavoritesViewState extends State<FavoritesView> {
   builder: (context, state) {
             if(state is FavoritesLoadingState){return AppLoading();}
             else if (state is FavoritesSuccessState){
+              final list =state.model.list;  
               return GridView.builder(
               shrinkWrap: true,
               physics: const NeverScrollableScrollPhysics(),
@@ -48,15 +49,15 @@ class _FavoritesViewState extends State<FavoritesView> {
                 crossAxisSpacing: 16.h,
 
               ),
-              itemCount: bloc.model!.list.length,
+              itemCount: list.length,
               itemBuilder: (context,index){
                 return InkWell(
                     onTap: (){
                       navigateTo(
                         ShowProduct(
-                          productsId: bloc.model!.list[index].id,
-                          productsName: bloc.model!.list[index].title,
-                          isFavorite: bloc.model!.list[index].isFavorite,
+                          productsId: list[index].id,
+                          productsName: list[index].title,
+                          isFavorite: list[index].isFavorite,
                         ),);
                     },
                     child:Container(
@@ -91,10 +92,10 @@ class _FavoritesViewState extends State<FavoritesView> {
                                     color: const Color(0xFFFFFCF7),
                                   ),
                                   child:
-                                  AppImage( bloc.model!.list[index].mainImage,fit: BoxFit.fill,w: double.infinity ,),
+                                  AppImage( list[index].mainImage,fit: BoxFit.fill,w: double.infinity ,),
 
                                 ),
-                                if (bloc.model!.list[index].discount != null)
+                                if (list[index].discount != null)
                                   Container(
                                     clipBehavior: Clip.antiAlias,
                                     padding:EdgeInsets.symmetric(horizontal: 10.w,vertical: 3.h) ,
@@ -105,7 +106,7 @@ class _FavoritesViewState extends State<FavoritesView> {
                                       color: AppTheme.mainColor,
                                     ),
                                     child: Text(
-                                      '${(bloc.model!.list[index].discount*100).toInt()}%' ,
+                                      '${(list[index].discount*100).toInt()}%' ,
                                       style:  TextStyle(fontSize: 14.sp,
                                           fontWeight: FontWeight.w900, color: Colors.white),
                                     ),
@@ -121,13 +122,13 @@ class _FavoritesViewState extends State<FavoritesView> {
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
                               Text(
-                                bloc.model!.list[index].title,
+                                list[index].title,
                                 style: TextStyle(fontSize: 12.sp, fontWeight: FontWeight.w900, color: AppTheme.mainColor),
                               ),
                               SizedBox(
                                 height: 8.h,
                               ),
-                              Text("السعر/${bloc.model!.list[index].unit.name}",
+                              Text("السعر/${list[index].unit.name}",
                                 style: TextStyle(fontSize: 12.sp, fontWeight: FontWeight.w900, color: Color(0xFF808080)),
 
                               ),
@@ -137,15 +138,15 @@ class _FavoritesViewState extends State<FavoritesView> {
                               Row(
                                 children: [
                                   Text(
-                                    "${bloc.model!.list[index].price.toInt()} ر٫س",
+                                    "${list[index].price.toInt()} ر٫س",
                                     style: TextStyle(fontSize: 12.sp, fontWeight: FontWeight.w900, color: AppTheme.mainColor),
                                   ),
                                   SizedBox(
                                     width: 3.w,
                                   ),
-                                  if (bloc.model!.list[index].priceBeforeDiscount != null)
+                                  if (list[index].priceBeforeDiscount != null)
                                     Text(
-                                      "${bloc.model!.list[index].priceBeforeDiscount} ر٫س",
+                                      "${list[index].priceBeforeDiscount} ر٫س",
                                       // overflow: TextOverflow.ellipsis,
                                       style: TextStyle(
                                         color: AppTheme.mainColor,
@@ -255,7 +256,7 @@ class _FavoritesViewState extends State<FavoritesView> {
               },
 
             );}
-            else if (state is FavoritesFailedState){return AppFailed(msg: state.error);}
+            else if (state is FavoritesFailedState){return AppFailed(msg: state.msg);}
             else{return AppLoading();}
 
   },

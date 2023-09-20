@@ -1,13 +1,14 @@
 
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
-import '../../../../helper/server_gate.dart';
+
+import '../../core/logic/server_gate.dart';
 part 'events.dart';
 part 'states.dart';
 
-class ForgetPasswordBloc extends Bloc<ForgetPasswordEvents,ForgetPasswordState>{
+class ForgetPasswordBloc extends Bloc<ForgetPasswordEvents,ForgetPasswordStates>{
 
-  ForgetPasswordBloc(this.serverGate):super(ForgetPasswordState()){
+  ForgetPasswordBloc(this.serverGate):super(ForgetPasswordStates()){
 
     on<ForgetPasswordStartEvents>(ForgetPassword);
     
@@ -16,7 +17,7 @@ class ForgetPasswordBloc extends Bloc<ForgetPasswordEvents,ForgetPasswordState>{
   final ServerGate serverGate;
 
 
-  void ForgetPassword (ForgetPasswordEvents event,Emitter<ForgetPasswordState>emit)async {
+  void ForgetPassword (ForgetPasswordEvents event,Emitter<ForgetPasswordStates>emit)async {
   
   emit(ForgetPasswordLoadingState());
   
@@ -28,10 +29,10 @@ class ForgetPasswordBloc extends Bloc<ForgetPasswordEvents,ForgetPasswordState>{
   if(response.success)
   {
     emit(ForgetPasswordSuccessState(
-        phone: phoneController));
+        phone: phoneController, msg: response.msg));
   }else{
     emit(ForgetPasswordFailState(
-        type: response.errType!, error: response.msg));
+        statusCode: response.errType!, msg: response.msg));
   }
   }
 }
