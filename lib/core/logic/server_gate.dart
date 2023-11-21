@@ -2,7 +2,9 @@ import 'dart:async';
 import 'dart:convert';
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
+import 'package:thimar/main.dart';
 import 'dart:developer';
+import '../../models/user.dart';
 import 'cache_helper.dart';
 
 // ignore: constant_identifier_names
@@ -21,8 +23,8 @@ class ServerGate {
       // "Authorization": "Bearer ${UserHelper.accessToken}",
       // "Accept": "application/json",
       // "Accept-Language": LocaleKeys.Lang.tr(),
-      'Authorization':"Bearer ${CacheHelper.getUserToken()}" ,
-      "Accept-Language": CacheHelper.getLang(),
+      'Authorization':"Bearer ${Users.i.token}" ,
+      "Accept-Language": "ar",
       "Accept": "application/json"
     };
   }

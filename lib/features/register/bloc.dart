@@ -5,6 +5,7 @@ import 'package:thimar/features/login/bloc.dart';
 
 import '../../core/logic/server_gate.dart';
 import '../../core/logic/toast.dart';
+import '../../models/user.dart';
 part 'events.dart';
 part 'model.dart';
 part 'states.dart';

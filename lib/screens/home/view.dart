@@ -1,11 +1,15 @@
 import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:kiwi/kiwi.dart';
+import 'package:thimar/core/design/res/app_loading.dart';
 import 'package:thimar/core/logic/app_theme.dart';
 import 'package:badges/badges.dart' as badges;
 import '../../core/design/res/app_image.dart';
 import '../../core/logic/custom_text.dart';
 import '../../core/logic/helper_methods.dart';
+import '../../features/cart/bloc.dart';
 import '../cart/view.dart';
 import 'widget/custom_categories.dart';
 import 'widget/custom_get_products.dart';
@@ -21,58 +25,69 @@ class HomeView extends StatefulWidget {
 }
 
 class _HomeViewState extends State<HomeView> {
-
-
-
+  
+  final bloc = KiwiContainer().resolve<ShowCartBloc>()..add(ShowCartStartEvent());
+  
   @override
   Widget build(BuildContext context) {
     return  Scaffold(
       appBar: AppBar(
         leadingWidth: 100,
         actions: [
+          BlocBuilder(
+            bloc: bloc,
+  builder: (context, state) {
+              if(state is ShowCartLoadingState){
+                return AppLoading();
+              }else if (state is ShowCartSuccessState  ){
+                return InkWell(
+                  onTap: (){
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => const CartView(),));
+                  },
+                  child: Padding(padding: const EdgeInsetsDirectional.fromSTEB(15, 0, 15, 0),
+                    child: Align(
+                      child: badges.Badge(
+                        badgeStyle: badges.BadgeStyle(
+                          shape:BadgeShape.circle,
+                          badgeColor:AppTheme.mainColor ,
+                          borderSide: const BorderSide(width: 0.9, color: Colors.white),
+                        ),
+                        position: BadgePosition.topStart(top: -12, start: -4),
+                        badgeContent: Text(
+                        '${state.model.list.length}',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 11.sp,
+                          ),
+                        ),
+                        child: Container(
+                            width: 33.w,
+                            height: 33.h,
+                            alignment: Alignment.center,
+                            decoration: BoxDecoration(
+                              color: const Color(0xFFE8EFE0),
+                              borderRadius: BorderRadius.circular(9.r),
+                            ),
+                            child:
+                            AppImage("assets/icons/market.png",w: 20.w,)
+                        ),
 
-          InkWell(
-            onTap: (){
-              Navigator.push(context, MaterialPageRoute(builder: (context) => const CartView(),));
-            },
-            child: Padding(padding: const EdgeInsetsDirectional.fromSTEB(15, 0, 15, 0),
-            child: Align(
-              child: badges.Badge(
-                badgeStyle: badges.BadgeStyle(
-                  shape:BadgeShape.circle,
-                  badgeColor:AppTheme.mainColor ,
-                  borderSide: const BorderSide(width: 0.9, color: Colors.white),
-                ),
-                position: BadgePosition.topStart(top: -12, start: -4),
-                badgeContent:Text(
-                  '3',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 11.sp,
-                  ),
-                ),
-                child: Container(
-                  width: 33.w,
-                  height: 33.h,
-                  alignment: Alignment.center,
-                  decoration: BoxDecoration(
-                    color: const Color(0xFFE8EFE0),
-                    borderRadius: BorderRadius.circular(9.r),
-                  ),
-                  child:
-                  AppImage( "assets/icons/market.png",w: 20.w,)
-                ),
 
+                      ),
+                    ),),
+                );
+              }else{
+                return Container(color: Colors.green,);
+              }
 
-              ),
-            ),),
-          )
+  },
+)
         ],
         leading: Padding(
           padding: EdgeInsets.only(right:15.w),
           child: Row(
             children: [
-              Image.asset('assets/icons/minlogo.png'),
+              AppImage( 'assets/icons/minlogo.png'),
               SizedBox(width: 3.w,),
               Text('سلة ثمرة',style: TextStyle(color: AppTheme.mainColor,fontSize: 14.sp,fontWeight: FontWeight.bold
               ),),

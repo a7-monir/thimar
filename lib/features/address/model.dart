@@ -7,7 +7,7 @@ class AddressData {
   AddressData.fromJson(Map<String, dynamic> json){
     print('=-=-=-=-=-=-=-=-=-=-=-=-=-=--------=-=-=-=-');
     print(json['data']);
-    list = List.from(json['data']).map((e)=>AddressModel.fromJson(e)).toList();
+    list = List.from(json['data']??[]).map((e)=>AddressModel.fromJson(e)).toList();
 
   }
 }

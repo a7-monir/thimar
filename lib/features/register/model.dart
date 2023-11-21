@@ -4,7 +4,7 @@ part of 'bloc.dart';
 class RegisterModel{
   late String message,status;
   late dynamic data;
- late int devMessage;
+  late int devMessage;
 
  RegisterModel.fromJson(Map<String,dynamic> json)
   {

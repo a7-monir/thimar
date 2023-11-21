@@ -30,8 +30,7 @@ class SectionsView extends StatefulWidget {
 
 class _SectionsViewState extends State<SectionsView> {
   final bloc = KiwiContainer().resolve<CategoriesProductBloc>();
-  final addToCartBloc = KiwiContainer().resolve<AddToCartBloc>()
-    ..add(AddToCartStartEvent());
+  final addToCartBloc = KiwiContainer().resolve<AddToCartBloc>();
 
   @override
   void initState() {
@@ -602,7 +601,7 @@ class _SectionsViewState extends State<SectionsView> {
                                             addToCartBloc.productId =
                                                  list[index].id;
                                             addToCartBloc
-                                                .add(AddToCartStartEvent());
+                                                .add(AddToCartStartEvent(productId: list[index].id));
                                             Toast.show(
                                                 "تم الاضافة بنجاح", context);
                                           },

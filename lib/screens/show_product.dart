@@ -36,8 +36,7 @@ class ShowProduct extends StatefulWidget {
 
 class _ShowProductState extends State<ShowProduct> {
   final bloc = KiwiContainer().resolve<ProductBloc>();
-  final addToCartBloc = KiwiContainer().resolve<AddToCartBloc>()
-    ..add(AddToCartStartEvent());
+  final addToCartBloc = KiwiContainer().resolve<AddToCartBloc>();
 
   AddFavModel? favModel;
   ShowProductData? showProductModel;
@@ -603,7 +602,7 @@ class _ShowProductState extends State<ShowProduct> {
                               onTap: () {
                                 addToCartBloc.productId =
                                     bloc.showProductModel!.data.id;
-                                addToCartBloc.add(AddToCartStartEvent());
+                                addToCartBloc.add(AddToCartStartEvent(productId:  bloc.showProductModel!.data.id));
                                 Toast.show("تم الاضافة بنجاح", context);
                                 showModalBottomSheet(
                                   isScrollControlled: true,

@@ -9,6 +9,7 @@ import '../../../../features/get_products/bloc.dart';
 import '../../../core/logic/app_theme.dart';
 import '../../../core/design/res/app_image.dart';
 import '../../../core/logic/helper_methods.dart';
+import '../../../features/cart/bloc.dart';
 import '../../show_product.dart';
 
 
@@ -25,8 +26,8 @@ class _GetProductsState extends State<GetProducts> {
 
   final getProductBloc = KiwiContainer().resolve<GetProductsBloc>()..add(GetProductsStartEvent());
 
-  final addToCartBloc =  KiwiContainer().resolve<AddToCartBloc>()..add(AddToCartStartEvent());
-
+  final addToCartBloc =  KiwiContainer().resolve<AddToCartBloc>();
+  final bloc = KiwiContainer().resolve<ShowCartBloc>()..add(ShowCartStartEvent());
 
   //int amount = 1 ;
   //GetProducts? check ;
@@ -49,8 +50,8 @@ class _GetProductsState extends State<GetProducts> {
             shrinkWrap: true,
             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: 2,
-              mainAxisExtent: 330,
-              crossAxisSpacing: 16.h,
+              mainAxisExtent: 332,
+              crossAxisSpacing: 6.h,
               //childAspectRatio: 160/283
             ),
             physics: const NeverScrollableScrollPhysics(),
@@ -145,9 +146,7 @@ class _GetProductsState extends State<GetProducts> {
                                 "${list[index].price.toInt()} ر٫س",
                                 style: TextStyle(fontSize: 12.sp, fontWeight: FontWeight.w900, color: AppTheme.mainColor),
                               ),
-                              SizedBox(
-                                width: 8.w,
-                              ),
+
                               if (list[index].priceBeforeDiscount != null)
                                 Text(
                                   "${list[index].priceBeforeDiscount} ر٫س",
@@ -251,22 +250,18 @@ class _GetProductsState extends State<GetProducts> {
                           ),
                           SizedBox(height: 5.h,),
                           Center(
-                            child: BlocBuilder(
-                              bloc: addToCartBloc,
-                              builder: (context, state) {
-                                return AppButton(
+                            child: AppButton(
                               text: 'أضف للسلة',
                               onTap: (){
-                                list[index].id;
-                                addToCartBloc.add(AddToCartStartEvent());
-
+                                addToCartBloc.add(AddToCartStartEvent(productId: list[index].id ));
+                                bloc.add(ShowCartStartEvent());
+                                setState(() {});
                               },
                               height: 30.h,
                               width: 115.w,
-                              );
-  },
-),
+                            ),
                           ),
+
                         ],
                       )
                     ],

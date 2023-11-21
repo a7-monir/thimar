@@ -14,6 +14,7 @@ import '../core/design/res/appbar.dart';
 import '../core/logic/cache_helper.dart';
 import '../core/logic/helper_methods.dart';
 import '../features/profile/bloc.dart';
+import '../models/user.dart';
 import 'city/view.dart';
 
 
@@ -65,12 +66,13 @@ class _PersonalInfoViewState extends State<PersonalInfoView> {
                                 fit: BoxFit.fill,
                               )
                             : AppImage(
-                                CacheHelper.getImage(),
+                          Users.i.image,
                                 fit: BoxFit.fill,
                               )),
                     Center(
                         child: GestureDetector(
                             onTap: () async {
+                              // ignore: invalid_use_of_visible_for_testing_member
                               final image = await ImagePicker.platform
                                   .getImageFromSource(
                                       source: ImageSource.gallery);
@@ -88,7 +90,7 @@ class _PersonalInfoViewState extends State<PersonalInfoView> {
                 ),
               ),
               Text(
-                CacheHelper.getFullName(),
+                Users.i.fullname,
                 style: TextStyle(
                   fontSize: 17.sp,
                   fontWeight: FontWeight.bold,
@@ -96,7 +98,7 @@ class _PersonalInfoViewState extends State<PersonalInfoView> {
                 ),
               ),
               Text(
-                "+${CacheHelper.getPhone()}",
+                "+${Users.i.phone}",
                 textDirection: TextDirection.ltr,
                 style: TextStyle(
                   fontSize: 17.sp,

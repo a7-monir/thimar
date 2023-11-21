@@ -25,8 +25,8 @@ class SearchView extends StatefulWidget {
 
 class _SearchViewState extends State<SearchView> {
   final bloc = KiwiContainer().resolve<SearchBloc>();
-  final addToCartBloc = KiwiContainer().resolve<AddToCartBloc>()
-    ..add(AddToCartStartEvent());
+  final addToCartBloc = KiwiContainer().resolve<AddToCartBloc>();
+
 
   @override
   Widget build(BuildContext context) {
@@ -342,7 +342,7 @@ class _SearchViewState extends State<SearchView> {
                                               addToCartBloc.productId =
                                                    list[index].id;
                                               addToCartBloc
-                                                  .add(AddToCartStartEvent());
+                                                  .add(AddToCartStartEvent(productId:list[index].id ));
                                               Toast.show(
                                                   "تم الاضافة بنجاح", context);
                                             },

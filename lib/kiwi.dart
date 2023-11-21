@@ -31,7 +31,7 @@ import 'features/verification/bloc.dart';
 
 
 
-void initKiwi() {
+void initKiwi(){
   KiwiContainer container = KiwiContainer();
   container.registerSingleton((c) => ServerGate());
   container.registerFactory((c) => LoginBloc(c.resolve<ServerGate>()));

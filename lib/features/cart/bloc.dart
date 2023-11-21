@@ -24,6 +24,8 @@ class ShowCartBloc extends Bloc<CartEvents,CartStates>{
     final response = await serverGate.getFromServer(url: 'client/cart');
     if(response.success){
      final  cartModel= CartModel.fromJson(response.response!.data);
+
+     print(cartModel.list.length.toString() +"-=======================-=-");
       emit(ShowCartSuccessState(model:cartModel));
     }
     else{

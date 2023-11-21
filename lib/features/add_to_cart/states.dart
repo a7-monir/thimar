@@ -2,7 +2,10 @@ part of 'bloc.dart';
 class AddToCartState{}
 
 
-class AddToCartLoadingState extends AddToCartState {}
+class AddToCartLoadingState extends AddToCartState {
+  final int id;
+  AddToCartLoadingState(this.id);
+}
 
 class AddToCartSuccessState extends AddToCartState {
   final String msg;

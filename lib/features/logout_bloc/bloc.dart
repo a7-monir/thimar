@@ -4,6 +4,7 @@ import 'package:thimar/core/logic/helper_methods.dart';
 
 import '../../core/logic/cache_helper.dart';
 import '../../core/logic/server_gate.dart';
+import '../../models/user.dart';
 
 part 'events.dart';
 part 'states.dart';
@@ -17,14 +18,14 @@ class LogoutBloc extends Bloc<LogoutEvents, LogoutStates> {
 
   void Logout(LogoutStartEvents event, Emitter<LogoutStates> emit) async {
     emit(LogoutLoadingState());
-print('-==-=------ ${CacheHelper.getDeviceToken()}');
+print('-==-=------ ${Users.i.deviceToken}');
     final response = await serverGate.sendToServer(url: 'logout',
         body: {
-          'device_token': CacheHelper.getDeviceToken(),
+          'device_token': Users.i.deviceToken,
           'type':Platform.operatingSystem,
         });
     if (response.success) {
-      CacheHelper.clear();
+      Users.i.clear();
       emit(LogoutSuccessState(msg: response.msg));
 
     } else {

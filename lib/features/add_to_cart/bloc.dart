@@ -15,15 +15,15 @@ class AddToCartBloc extends Bloc<AddToCartEvents,AddToCartState>{
   final ServerGate serverGate;
 
   // AddToCartModel? addToCartModelCartModel;
-   int? productId ;
+  int? productId ;
 
   void AddToCart(AddToCartStartEvent event, Emitter<AddToCartState> emit) async {
-    emit(AddToCartLoadingState());
+    emit(AddToCartLoadingState(event.productId));
 
     final response = await serverGate.sendToServer(
         url: 'client/cart',
         body: {
-          'product_id': productId,
+          'product_id': event.productId,
           'amount': 1
         });
 

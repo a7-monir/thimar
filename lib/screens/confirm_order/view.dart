@@ -17,6 +17,7 @@ import '../../core/logic/cache_helper.dart';
 import '../../core/logic/helper_methods.dart';
 import '../../core/logic/toast.dart';
 import '../../features/cart/bloc.dart';
+import '../../models/user.dart';
 import 'add_address/view.dart';
 import 'finish_order/view.dart';
 
@@ -60,7 +61,7 @@ class _ConfirmOrderViewState extends State<ConfirmOrderView> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'الإسم : ${CacheHelper.getFullName()}',
+                'الإسم : ${Users.i.fullname}',
                 style: TextStyle(
                     color: AppTheme.mainColor,
                     fontSize: 17.sp,
@@ -70,7 +71,7 @@ class _ConfirmOrderViewState extends State<ConfirmOrderView> {
                 height: 5.h,
               ),
               Text(
-                'الجوال : ${CacheHelper.getPhone()}',
+                'الجوال : ${Users.i.phone}',
                 style: TextStyle(
                     color: AppTheme.mainColor,
                     fontSize: 17.sp,

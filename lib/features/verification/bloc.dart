@@ -5,12 +5,13 @@ import 'package:circular_countdown_timer/circular_countdown_timer.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:thimar/core/logic/helper_methods.dart';
+import 'package:thimar/models/user.dart';
 
 import '../../core/logic/cache_helper.dart';
 import '../../core/logic/server_gate.dart';
 
 part 'events.dart';
-part 'model.dart';
+// part 'model.dart';
 part 'states.dart';
 
 class VerificationBloc extends Bloc<VerificationEvents, VerificationStates> {
@@ -49,21 +50,11 @@ class VerificationBloc extends Bloc<VerificationEvents, VerificationStates> {
       },
     );
     if (response.success) {
-      final verificationModel = VerificationData.fromJson(response.response!.data);
-      print(response.response!.data);
-      CacheHelper.setUserId(verificationModel.data.id);
-      CacheHelper.setFullName(verificationModel.data.fullname);
-      CacheHelper.setPhone(verificationModel.data.phone);
-      CacheHelper.setEmail(verificationModel.data.email);
-      CacheHelper.setImage(verificationModel.data.image);
-      CacheHelper.setUnreadNotifications(verificationModel.data.unreadNotifications);
-      CacheHelper.setUserType(verificationModel.data.userType);
-      CacheHelper.setUserToken(verificationModel.data.token);
-      CacheHelper.setCityName(verificationModel.data.city.name ?? "");
-      CacheHelper.setCityId(verificationModel.data.city.id ?? "");
-      CacheHelper.setUserCartCount(verificationModel.data.userCartCount);
-      CacheHelper.setDeviceToken(deviceToken);
-      emit(VerificationSuccessState(model: verificationModel, msg: response.msg));
+      // final verificationModel = VerificationData.fromJson(response.response!.data);
+
+      Users.i.fromJson(response.response!.data);
+      Users.i.save();
+      emit(VerificationSuccessState( msg: response.msg));
 
     } else {
       emit(VerificationFailedState(

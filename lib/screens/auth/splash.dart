@@ -10,6 +10,7 @@ import 'package:thimar/screens/auth/login.dart';
 import '../../core/design/res/app_image.dart';
 import '../../core/logic/cache_helper.dart';
 import '../../core/logic/helper_methods.dart';
+import '../../models/user.dart';
 import '../main/view.dart';
 
 
@@ -23,7 +24,7 @@ class SplashView extends StatefulWidget {
 class _SplashViewState extends State<SplashView> {
 
   goToHomePage()async{
-    if (CacheHelper.getUserToken() == null || CacheHelper.getUserToken() == '') {
+    if (Users.i.token == null || Users.i.token == '') {
       navigateTo(LoginView(),);
     } else {
       navigateTo(MainView(),);

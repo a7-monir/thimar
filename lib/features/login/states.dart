@@ -6,8 +6,8 @@ class LoginLoadingState extends LoginStates{}
 
 class LoginSuccessState extends LoginStates{
   final String msg;
-  final LoginData model;
-  LoginSuccessState({required this.msg,required this.model}){
+
+  LoginSuccessState({required this.msg,}){
     showMessage(msg);
   }
 }

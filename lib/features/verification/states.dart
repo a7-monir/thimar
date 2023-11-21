@@ -5,10 +5,10 @@ class VerificationLoadingState extends VerificationStates{
 }
 
 class VerificationSuccessState extends VerificationStates{
-  final VerificationData model;
+
   final String msg;
   VerificationSuccessState({
-    required this.model,
+
     required this.msg
   }){showMessage(msg);}
 }

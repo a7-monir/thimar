@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 
 import '../../core/logic/cache_helper.dart';
 import '../../core/logic/server_gate.dart';
+import '../../models/user.dart';
 
 part 'event.dart';
 part 'model.dart';
@@ -16,11 +17,11 @@ class ProfileBloc extends Bloc<ProfileEvents,ProfileStates>{
     on<ProfileStartEvent>(getData);
   }
   final ServerGate serverGate;
-  final phoneController = TextEditingController(text: CacheHelper.getPhone());
-  final nameController = TextEditingController(text: CacheHelper.getFullName());
-  final cityController = TextEditingController(text: CacheHelper.getCityName());
+  final phoneController = TextEditingController(text: Users.i.phone);
+  final nameController = TextEditingController(text: Users.i.fullname);
+  final cityController = TextEditingController(text: Users.i.cityName);
   String? cityId;
-  String cityName = CacheHelper.getCityName();
+  String cityName = Users.i.cityName;
   File?image;
 
   void getData(ProfileStartEvent event , Emitter<ProfileStates>emit)async{
@@ -38,14 +39,17 @@ class ProfileBloc extends Bloc<ProfileEvents,ProfileStates>{
 
     if(response.success){
 
-      final profileModel =ProfileData.fromJson(response.response!.data);
-      CacheHelper.setFullName(profileModel.data.fullname);
-      CacheHelper.setImage(profileModel.data.image);
-      CacheHelper.setPhone(profileModel.data.phone);
-      CacheHelper.setCityId(profileModel.data.city.id.toString());
-      CacheHelper.setCityName(profileModel.data.city.name.toString());
-    print(CacheHelper.getCityId()+"=-=--=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=");
-      emit(ProfileSuccessState(model: profileModel));
+      // final profileModel =ProfileData.fromJson(response.response!.data);
+
+      Users.i.fromJson(response.response!.data["data"]);
+      Users.i.save();
+    //   CacheHelper.setFullName(profileModel.data.fullname);
+    //   CacheHelper.setImage(profileModel.data.image);
+    //   CacheHelper.setPhone(profileModel.data.phone);
+    //   CacheHelper.setCityId(profileModel.data.city.id.toString());
+    //   CacheHelper.setCityName(profileModel.data.city.name.toString());
+    // print(CacheHelper.getCityId()+"=-=--=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=");
+      emit(ProfileSuccessState());
 
     }else{
       emit(ProfileFailedState(

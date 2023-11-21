@@ -14,6 +14,7 @@ import '../core/logic/cache_helper.dart';
 import '../core/logic/helper_methods.dart';
 import '../core/logic/toast.dart';
 import '../features/logout_bloc/bloc.dart';
+import '../models/user.dart';
 import 'auth/splash.dart';
 import 'about_us.dart';
 import 'address.dart';
@@ -71,14 +72,14 @@ class _MyAccountViewState extends State<MyAccountView> {
                               borderRadius: BorderRadius.circular(15.r),
                             ),
                             child: AppImage(
-                              CacheHelper.getImage(),
+                              Users.i.image,
                               fit: BoxFit.fill,
                             )),
                         SizedBox(
                           height: 4.h,
                         ),
                         Text(
-                          CacheHelper.getFullName(),
+                          Users.i.fullname,
                           style: TextStyle(
                             fontSize: 14.sp,
                             fontWeight: FontWeight.bold,
@@ -89,7 +90,7 @@ class _MyAccountViewState extends State<MyAccountView> {
                           height: 5.h,
                         ),
                         Text(
-                          '+${CacheHelper.getPhone()}',
+                          '+${Users.i.phone}',
                           textDirection: TextDirection.ltr,
                           style: TextStyle(
                             fontSize: 14.sp,

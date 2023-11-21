@@ -9,6 +9,7 @@ import '../../core/logic/app_theme.dart';
 import '../../core/design/res/app_failed.dart';
 import '../../features/login/bloc.dart';
 import '../../features/register/bloc.dart';
+import '../../models/user.dart';
 
 
 
